@@ -133,20 +133,22 @@ async function recepieFinder() {
 
 // recipeBook();
 
+
+
 let uul = document.getElementById('ul')
 
 async function naame() {
     let data = await recepieFinder();
 
     for (let i = 1; i <= 20; i++) {
-        const ingred = data.meals[0][`strIngredient${i}`];
-        
+        const ingred = data.meals[0][`strIngredient${i}`];  
+
         let li = document.createElement('li')
 
         li.classList.add("bg-gray-100", "hover:underline", "capitalize", "hover:bg-gray-200", "w-fit", "px-2", "rounded-md", "whitespace-nowrap")
-        
+
         li.textContent = ingred;
-        
+
         if (ingred !== null && ingred !== '') {
             uul.appendChild(li)
         }
