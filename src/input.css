@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .grCenter {
+    @apply grid place-items-center;
+  }
+  .flexCenter{
+    @apply flex items-center justify-center;
+  }
+}
