@@ -20,3 +20,6 @@
 #scroller::-webkit-scrollbar-thumb:hover {
   background: #b96f00;
 }
+#ingredientUl::-webkit-scrollbar{
+  display: none;
+}

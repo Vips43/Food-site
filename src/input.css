@@ -1,10 +1,50 @@
 @import "tailwindcss";
 
 @layer utilities {
-  .grCenter {
-    @apply grid place-items-center;
+ .grCenter {
+  @apply grid place-items-center;
+ }
+ .flexCenter {
+  @apply flex items-center justify-center;
+ }
+ .bg-conic-metal {
+    background: conic-gradient(
+      from 30deg,
+      #a8a8a8 0%,      /* deep black */
+      #6d6a6a 15%,     /* dark grey */
+      #c0c0c0 40%,     /* silver */
+      #e5e5e5 60%,     /* bright silver */
+      #a8a8a8 80%,     /* medium silver */
+      #858383 100%     /* back to black */
+    );
   }
-  .flexCenter{
-    @apply flex items-center justify-center;
-  }
+ .scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+ }
+ .scrollbar-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+ }
+ /* Style the overall s5rollbar */
+ .scroller::-webkit-scrollbar {
+  width: 5px;
+  height: 12px;
+ }
+
+ /* Style the scrollbar track */
+ .scroller::-webkit-scrollbar-track {
+  background: #f8f8f8;
+  border-radius: 10px;
+ }
+
+ /* Style the scrollbar thumb */
+ .scroller::-webkit-scrollbar-thumb {
+  background: #9b9b9b;
+  border-radius: 10px;
+ }
+
+ /* Style the scrollbar thumb on hover */
+ .scroller::-webkit-scrollbar-thumb:hover {
+  background: #cecece;
+ }
 }
