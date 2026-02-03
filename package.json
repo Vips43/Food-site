@@ -5,6 +5,27 @@
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.14",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "tailwindcss": "^4.1.14"
-  }
+  },
+  "dependencies": {
+    "@motionone/dom": "^10.18.0",
+    "google-translate-api": "^0.1.1"
+  },
+  "name": "food-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vips43/Food-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Vips43/Food-site/issues"
+  },
+  "homepage": "https://github.com/Vips43/Food-site#readme"
 }

@@ -2,86 +2,54 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
-    <link rel="stylesheet" href="./src/output.css">
-    <link rel="stylesheet" href="./src/input.css">
-    <link rel="stylesheet" href="styles/style.css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link rel="stylesheet" href="./src/output.css">
+  <link rel="stylesheet" href="./src/input.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <title>Document</title>
 </head>
 
-<body>
-    <main id="main" class="w-full h-screen py-10 grid gap-10">
-        <!-- <div class="border mx-auto bg-white max-w-2xl max-h-[500px] space-y-2">
-            <div class="bg-cyan-200 grCenter grid-cols-2">
-                <div class="col-span-2">
-                    <h2>Food Recepie Name</h2>
-                </div>
-                <div>
-                    <p class="capitalize">category: <strong>Italian</strong> <strong>Veg</strong></p>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-                <div class="px-3 grid gap-2">
-                    <div class="rounded-2xl w-full overflow-hidden">
-                        <img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" class="" alt="">
-                    </div>
-                    <div class="p-2 w-full border h-28 overflow-auto rounded scrollbar-hidden">
-                        <ul class="grid w-full text-sm gap-1">
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                penne rigate</li>
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                olive oil</li>
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                garlic</li>
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                olive oil</li>
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                garlic</li>
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                olive oil</li>
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                garlic</li>
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                olive oil</li>
-                            <li
-                                class="bg-gray-100 hover:underline capitalize hover:bg-gray-200 w-fit px-2 rounded-md whitespace-nowrap">
-                                garlic</li>
-                        </ul>
-                    </div>
+<body class="scrollbar-hide ">
+  <nav class="h-10 flex items-center justify-around relative overflow-hidden bg-neutral-600 text-white">
+    <div>
+      <h3 class="font-semibold text-2xl">Food Corner</h3>
+    </div>
 
-                </div>
+    <div class="h-full flex items-center">
+      <h3>Categories</h3>
+      <div id="sideMenu" class="w-10 grid place-items-center cursor-pointer">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </div>
+    <ul id="catsUl" class="absolute right-0 top-10 w-3xs p-2 bg-white z-[999] transition-all translate-x-96">
+    </ul>
+  </nav>
 
-                <div class="p-4 row-span-1">
-                    <h3 class="font-bold text-xl">Instructions</h3>
-                    <div class="relative grid gap-2 h-[90%] overflow-auto">
-                        <div id="scroller" class="absolute w-full overflow-auto">
-                            <p class="text-sm break-words whitespace-normal">strInstructions": "Bring a large pot of
-                                water to a boil. Add kosher salt to the boiling water, then add the pasta. Cook
-                                according to the package instructions, about 9 minutes.\r\nIn a large skillet over
-                                medium-high heat, add the olive oil and heat until the oil starts to shimmer. Add the
-                                garlic and cook, stirring, until fragrant, 1 to 2 minutes. Add the chopped tomatoes, red
-                                chile flakes, Italian seasoning and salt and pepper to taste. Bring to a boil and cook
-                                for 5 minutes. Remove from the heat and add the chopped basil.\r\nDrain the pasta and
-                                add it to the sauce. Garnish with Parmigiano-Reggiano flakes and more basil and serve
-                                warm.",,</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    </main>
+  <!-- main menu  -->
+  <main id="catsDishes" class="flex gap-2 justify-center flex-wrap bg-white py-2">
+    <div class="w-48 border border-gray-300 rounded-lg p-1 bg-white grid gap-2">
+      <img src="image/dish.jpg" loading="lazy" alt="dish" class="w-44 mx-auto ">
+      <h4 class="font-semibold line-clamp-2 leading-4"> dish name dish name dish name</h4>
+    </div>
+  </main>
 
-    <script src="scripts/script.js"></script>
+
+  <main id="main"
+    class="h-screen w-screen bg-gray-800 text-white flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+    <div class="w-screen flex-1 shrink-0 flex lg:flex-row items-center justify-center gap-10">
+
+    </div>
+  </main>
+
+
+
+
+
+  <script src="scripts/misc.js"></script>
+  <script type="module" src="scripts/script.js"></script>
+
 </body>
 
 </html>
