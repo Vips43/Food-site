@@ -1,6 +1,6 @@
 
-function showSkeleton(count = 9) {
-  catsDishes.innerHTML = "";
+export function showSkeleton(count = 9, divs) {
+  divs.innerHTML = "";
 
   const fragment = document.createDocumentFragment();
 
@@ -19,5 +19,19 @@ function showSkeleton(count = 9) {
     `;
     fragment.append(skel);
   }
-  catsDishes.append(fragment);
+  divs.append(fragment);
 }
+
+export function getDietaryStatus(meal) {
+    const vegCategories = ['Vegetarian', 'Vegan'];
+    const nonVegCategories = ['Beef', 'Chicken', 'Lamb', 'Pork', 'Seafood', 'Goat'];
+    
+    if (vegCategories.includes(meal)) {
+        return `<span class="material-symbols-outlined text-green-500">square_dot</span>`
+    } else if (nonVegCategories.includes(meal)) {
+        return `<span class="material-symbols-outlined text-red-500">square_dot</span>`;
+    }
+    return `<span class="material-symbols-outlined">square_dot</span>`
+}
+
+// <span class="material-symbols-outlined">square_dot</span>

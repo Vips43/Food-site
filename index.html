@@ -5,14 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=square_dot" />
+
   <link rel="stylesheet" href="./src/output.css">
-  <link rel="stylesheet" href="./src/input.css">
   <link rel="stylesheet" href="styles/style.css">
   <title>Document</title>
 </head>
 
+
 <body class="scrollbar-hide ">
-  <nav class="h-10 flex items-center justify-around relative overflow-hidden bg-neutral-600 text-white">
+  <nav class="h-16 flex items-center justify-around relative overflow-hidden bg-neutral-600 text-white">
     <div>
       <h3 class="font-semibold text-2xl">Food Corner</h3>
     </div>
@@ -23,21 +25,26 @@
         <i class="fa-solid fa-bars"></i>
       </div>
     </div>
-    <ul id="catsUl" class="absolute right-0 top-10 w-3xs p-2 bg-white z-[999] transition-all translate-x-96">
-    </ul>
   </nav>
 
-  <!-- main menu  -->
-  <main id="catsDishes" class="flex gap-2 justify-center flex-wrap bg-white py-2">
-    <div class="w-48 border border-gray-300 rounded-lg p-1 bg-white grid gap-2">
-      <img src="image/dish.jpg" loading="lazy" alt="dish" class="w-44 mx-auto ">
-      <h4 class="font-semibold line-clamp-2 leading-4"> dish name dish name dish name</h4>
-    </div>
+  <main id="" class="p-3">
+    <h3 class="text-center text-2xl font-semibold my-3">Meal Categories</h3>
+    <ul id="catsUl" class="flex justify-center items-center flex-wrap gap-2">
+      <li class="shrink-0 max-w-44 rounded-lg overflow-hidden grid gap-2 pb-1 ">
+        <img src="/image/dish.jpg" alt="">
+        <h3>meal name </h3>
+      </li>
+      
+    </ul>
   </main>
+
+  <!-- main menu  -->
+
+  
 
 
   <main id="main"
-    class="h-screen w-screen bg-gray-800 text-white flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+    class="h-screen w-screen bg-gray-800 text-white flex overflow-x-scroll snap-x snap-mandatory scrollbar-hide">
     <div class="w-screen flex-1 shrink-0 flex lg:flex-row items-center justify-center gap-10">
 
     </div>
@@ -47,7 +54,7 @@
 
 
 
-  <script src="scripts/misc.js"></script>
+  <script type="module" src="scripts/misc.js"></script>
   <script type="module" src="scripts/script.js"></script>
 
 </body>
