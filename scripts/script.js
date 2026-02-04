@@ -1,6 +1,6 @@
 
 import { animate, scroll } from "https://cdn.jsdelivr.net/npm/@motionone/dom/+esm";
-import { getDietaryStatus, showSkeleton } from "./misc.js";
+import { colors, getDietaryStatus, showSkeleton } from "./misc.js";
 
 
 
@@ -56,20 +56,20 @@ async function getCategories() {
 
 function renderCats() {
   getCategories().then(cats => {
+    console.log(cats)
     catsUl.innerHTML = ``
     const fragment = document.createDocumentFragment();
 
     cats.forEach((cat, index) => {
       const li = document.createElement("li");
       li.className = `
-        shrink-0 max-w-44 rounded-lg shadow-md h-48 overflow-hidden grid gap-2 pb-1 
-        opacity-0 translate-y-4 transition-all duration-500
+        shrink-0 max-w-36 rounded-lg shadow-md overflow-hidden grid gap-2 pb-1 opacity-0 translate-y-4 transition-all duration-500
       `;
 
       li.dataset.id = cat.idCategory;
       li.innerHTML = `
-        <img src=${cat.strCategoryThumb} alt="">
-        <h3 class="text-center">${cat.strCategory} </h3>
+        <img src='${cat.strCategoryThumb}' alt="">
+        <h3 class="text-center font-display">${cat.strCategory} </h3>
       `;
 
       li.addEventListener("click", () => {
@@ -98,6 +98,8 @@ renderCats()
 // recepie book 
 async function recipeBook() {
   const data = await recepieFinder();
+  const {bg, font, heading} = colors[2]
+
   if (!data) {
     main.innerHTML = "<p class='text-center text-red-600'>Failed to load recipes</p>";
     return;
@@ -117,22 +119,23 @@ async function recipeBook() {
         ingredientsList += `
           <li class="cursor-help text-left border-b border-dotted border-gray-400" 
               onclick="alertIngredient('${ing}')">
-            <strong class="text-neutral-500">${ing}</strong> : ${measure}
+            <strong class="text-neutral-500 font-work">${ing}</strong> : <span class="font-code"> ${measure} </span>
           </li>`;
       }
     }
     const mealContainer = document.createElement("div");
-    mealContainer.className = "flex-none w-screen h-screen flex flex-wrap lg:flex-nowrap gap-3 md:gap-8 p-10 items-center justify-center snap-start";
+    mealContainer.className = "flex-none w-screen min-h-dvh flex flex-wrap lg:flex-nowrap gap-3 md:gap-8 p-10 items-center justify-center snap-start";
+    mealContainer.style.background = bg
     mealContainer.innerHTML = `
       <section class="instruction w-full leading-2 lg:w-1/3 flex justify-center order-2 lg:order-1">
         <div class="max-w-md text-center">
-          <h3 class="font-bold text-2xl mb-4">Instructions</h3>
-          <p class="text-xs leading-relaxed text-gray-300">${meal.strInstructions.substring(0, 400)}...</p>
+          <h3 class="font-bold text-2xl mb-4 font-heading" style="color:${heading}">Instructions</h3>
+          <p class="text-xs leading-relaxed font-code text-gray-300" style="color:${font}">${meal.strInstructions.substring(0, 400)}...</p>
         </div>
       </section>
 
       <section class="w-full lg:w-1/3 flex flex-col items-center order-2 lg:order-2">
-        <h2 class="font-black text-4xl text-center mb-6 uppercase tracking-tighter text-yellow-400">${meal.strMeal} - ${getDietaryStatus(meal.strCategory)}</h2>
+        <h2 class="font-bold text-4xl text-center mb-6 uppercase tracking-tighter text-yellow-400 font-heading" style="color:${heading}">${meal.strMeal} - ${getDietaryStatus(meal.strCategory)}</h2>
         <div class="img_div w-72 md:w-96 rounded-full overflow-hidden shadow-2xl border-8 border-gray-700">
           <img src="${meal.strMealThumb}" class="w-full h-auto object-cover scale-110 hover:scale-100 transition-transform duration-500">
         </div>
@@ -140,7 +143,7 @@ async function recipeBook() {
 
       <section class="ingredient w-full lg:w-1/3 flex justify-center order-3">
         <div class="max-w-lg text-center">
-          <h3 class="font-bold text-2xl mb-4">Ingredients</h3>
+          <h3 class="font-bold text-2xl mb-4" style="color:${heading}">Ingredients</h3>
           <ul class="grid grid-cols-3 gap-1 text-xs capitalize ">
             ${ingredientsList}
           </ul>
@@ -181,7 +184,7 @@ if (main) {
 
 const innerEffects = [
   {
-    img: { transform: ["scale(0.8)", "scale(1)"], opacity: [0, 1] },
+    img: { transform: ["scale(0.8) rotate(180deg)", "rotate(0deg) scale(1)"], opacity: [0, 1] },
     instruction: { opacity: [0, 1], clipPath: ["inset(0 100% 0 100%)", "inset(0 0% 0 0)"] },
     ingredient: { opacity: [0, 1] }
   }

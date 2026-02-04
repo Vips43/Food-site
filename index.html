@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=square_dot" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=square_dot" />
 
   <link rel="stylesheet" href="./src/output.css">
   <link rel="stylesheet" href="styles/style.css">
@@ -14,44 +15,44 @@
 
 
 <body class="scrollbar-hide ">
-  <nav class="h-16 flex items-center justify-around relative overflow-hidden bg-neutral-600 text-white">
+  <nav class="h-16 flex items-center justify-around relative text-white overflow-hidden bg-neutral-600">
     <div>
       <h3 class="font-semibold text-2xl">Food Corner</h3>
     </div>
+    <div
+      class="group flex items-center w-full max-w-md bg-white border border-slate-200 rounded-full px-4 py-2 transition-all duration-300 hover:shadow-md focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100">
 
-    <div class="h-full flex items-center">
-      <h3>Categories</h3>
-      <div id="sideMenu" class="w-10 grid place-items-center cursor-pointer hover:opacity-60 ">
-        <i class="fa-solid fa-bars"></i>
+      <input type="search" id="search" placeholder="Search anything..."
+        class="flex-1 px-3 bg-transparent text-slate-700 text-sm outline-none placeholder:text-slate-400">
+
+      <div class="flex-shrink-0 text-slate-400 group-focus-within:text-blue-500 transition-colors duration-300">
+        <i class="fa-solid fa-magnifying-glass"></i>
       </div>
     </div>
   </nav>
 
-  <main id="" class="p-3">
+  <main class="p-3">
     <h3 class="text-center text-2xl font-semibold my-3">Meal Categories</h3>
     <ul id="catsUl" class="flex justify-center items-center flex-wrap gap-2">
-      <li class="shrink-0 max-w-44 rounded-lg overflow-hidden grid gap-2 pb-1 ">
+      <!-- <li class="shrink-0 max-w-44 rounded-lg overflow-hidden grid gap-2 pb-1 trans" >
         <img src="/image/dish.jpg" alt="">
         <h3>meal name </h3>
-      </li>
-      
+      </li> -->
+
     </ul>
   </main>
 
   <!-- main menu  -->
 
-  
+
 
 
   <main id="main"
-    class="h-screen w-screen bg-gray-800 text-white flex overflow-x-scroll snap-x snap-mandatory scrollbar-hide">
+    class="min-h-dvh w-dvw bg-gray-800 text-white flex overflow-x-scroll snap-x snap-mandatory scrollbar-hide overflow-y-visible">
     <div class="w-screen flex-1 shrink-0 flex lg:flex-row items-center justify-center gap-10">
 
     </div>
   </main>
-
-
-
 
 
   <script type="module" src="scripts/misc.js"></script>

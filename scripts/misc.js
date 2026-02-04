@@ -35,3 +35,31 @@ export function getDietaryStatus(meal) {
 }
 
 // <span class="material-symbols-outlined">square_dot</span>
+
+export const colors = [
+  {
+    bg:"#562F00",
+    font:"#FFCE99",
+    heading:"#FF9644"
+  },
+  {
+    bg:"#15173D",
+    font:"#EEEEEE",
+    heading:"#982598"
+  },
+  {
+    bg:"#30364F",
+    font:"#7AB2B2",
+    heading:"#576A8F"
+  },
+  {
+    bg:"#30364F",
+    font:"#E1D9BC",
+    heading:"#ACBAC4"
+  },
+  {
+    bg:"#0C2C55",
+    font:"#629FAD",
+    heading:"#296374"
+  },
+]
