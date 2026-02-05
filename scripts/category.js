@@ -22,12 +22,12 @@ async function getByCats(category) {
     h3.textContent= `Category : ${category.toUpperCase()} (${data.meals.length})`
     data.meals.forEach((meal, index) => {
     const div = document.createElement("div");
-    div.className = "w-44 border border-gray-300 rounded-lg bg-white opacity-0 translate-y-6 scale-95 transition-all duration-500 ease-out overflow-hidden grid gap-2 pb-1 hover:scale-100 hover:shadow-md";
+    div.className = "w-44 dark:bg-black border border-gray-300 rounded-lg bg-white opacity-0 translate-y-6 transition-all duration-1000 ease-out overflow-hidden grid gap-2 pb-1 hover:shadow-md";
 
     div.dataset.id = meal?.idMeal;
     div.innerHTML = `
       <img src="${meal?.strMealThumb}/small" loading="lazy"
-           class="w-44 mx-auto object-cover">
+           class="w-44 mx-auto object-cover" alt="Loading...">
       <h4 class="font-semibold text-sm text-center leading-4 line-clamp-2 px-1">
         ${meal?.strMeal}
       </h4>

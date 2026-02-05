@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="">
 
 <head>
   <meta charset="UTF-8">
@@ -15,15 +15,13 @@
 
 
 <body class="scrollbar-hide">
-  <nav class="sticky top-0 z-50 backdrop-blur-md text-white bg-neutral-900/70 border-b border-white/10">
+  <!-- <nav class="sticky top-0 z-50 backdrop-blur-md dark:text-white bg-neutral-800/80 dark:bg-neutral-500/70 border-b border-white/10">
     <div class="max-w-screen-xl mx-auto px-4 md:px-8 h-16 flex items-center gap-4">
 
-      <!-- Logo -->
       <div class="font-bold text-lg md:text-xl whitespace-nowrap">
         🍽️ Food Corner
       </div>
 
-      <!-- Search -->
       <div class="flex-1 flex justify-center dark:bg-neutral-900 rounded-full">
         <div
           class="group flex items-center w-full max-w-lg dark:bg-neutral-700 dark:text-slate-300 bg-white/90 text-slate-700 rounded-full px-4 py-2 shadow-inner transition focus-within:ring-4 focus-within:ring-amber-400/40">
@@ -34,24 +32,19 @@
           <i class="fa-solid fa-magnifying-glass text-slate-400 group-focus-within:text-amber-500 transition"></i>
         </div>
       </div>
-      <button id="themeToggle" class="px-3 py-1 rounded bg-black text-white dark:bg-white dark:text-black">
-        Toggle
+      <button id="themeToggle" class="w-10 h-5 rounded bg-black text-white dark:bg-white dark:text-black theme_toggle">
+        
       </button>
-
-
     </div>
-  </nav>
+  </nav> -->
 
+  <div id="navbar"></div>
 
+<div id="toast" class="fixed top-52 left-1/2 z-999 -translate-x-1/2  mx-auto w-fit p-2 hidden gap-3 bg-gray-400 transition-all duration-700">not working <span>✖</span></div>
 
-
-  <main class="p-3 min-h-dvh">
+  <main class="p-3 min-h-dvh dark:text-white dark:bg-neutral-700">
     <h3 class="text-center text-2xl font-semibold my-3">Meal Categories</h3>
-    <ul id="catsUl" class="flex justify-center items-center flex-wrap gap-2">
-      <!-- <li class="shrink-0 max-w-44 rounded-lg overflow-hidden grid gap-2 pb-1 trans" >
-        <img src="/image/dish.jpg" alt="">
-        <h3>meal name </h3>
-      </li> -->
+    <ul id="catsUl" class="container mx-auto flex justify-around items-center flex-wrap gap-2">
 
     </ul>
   </main>

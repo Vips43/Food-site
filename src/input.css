@@ -63,4 +63,7 @@
    background: #cecece;
   }
  }
+ .theme_toggle{
+      @apply relative before:content-["☼"] before:text-black before:text-sm dark:before:content-["☾"] dark:before:text-white before:absolute before:inset-0 before:bg-white dark:before:bg-black before:w-1/2 before:h-full before:rounded-full rounded-full dark:before:translate-x-full before:grid before:place-items-center before:transition-all before:duration-700
+ }
 }

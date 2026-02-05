@@ -58,7 +58,7 @@ function renderCats() {
     cats.forEach((cat, index) => {
       const li = document.createElement("li");
       li.className = `
-        shrink-0 max-w-36 rounded-lg shadow-md overflow-hidden grid gap-2 pb-1 opacity-0 translate-y-4 transition-all duration-500
+        shrink-0 max-w-36 rounded-lg shadow-md dark:shadow-gray-500 overflow-hidden grid gap-2 pb-1 opacity-0 translate-y-4 transition-all duration-500
       `;
 
       li.dataset.id = cat.idCategory;
@@ -83,7 +83,9 @@ function renderCats() {
     catsUl.append(fragment);
   });
 }
-renderCats()
+if(catsUl){
+  renderCats()
+}
 
 
 
@@ -93,8 +95,10 @@ renderCats()
 // recepie book 
 async function recipeBook() {
   const data = await recepieFinder();
-  const {bg, font, heading} = colors[2]
-
+  // const {bg, font, heading} = colors[1]
+  const l = colors[1]
+  const d = colors[1]
+  
   console.log(data)
   if (!data) {
     main.innerHTML = "<p class='text-center text-red-600'>Failed to load recipes</p>";
@@ -121,17 +125,17 @@ async function recipeBook() {
     }
     const mealContainer = document.createElement("div");
     mealContainer.className = "flex-none w-screen min-h-dvh flex flex-wrap lg:flex-nowrap gap-3 md:gap-8 p-10 items-center justify-center snap-start";
-    mealContainer.style.background = bg
+    mealContainer.style.background = l.bg
     mealContainer.innerHTML = `
       <section class="instruction w-full leading-2 lg:w-1/3 flex justify-center order-2 lg:order-1">
         <div class="max-w-md text-center">
-          <h3 class="font-bold text-2xl mb-4 font-heading" style="color:${heading}">Instructions</h3>
-          <p class="text-xs leading-relaxed font-code text-gray-300" style="color:${font}">${meal.strInstructions.substring(0, 400)}...</p>
+          <h3 class="font-bold text-2xl mb-4 font-heading" style="color:${l.heading}">Instructions</h3>
+          <p class="text-xs leading-relaxed font-code text-gray-300" style="color:${l.font}">${meal.strInstructions.substring(0, 400)}...</p>
         </div>
       </section>
 
       <section class="w-full lg:w-1/3 flex flex-col items-center order-2 lg:order-2">
-        <h2 class="font-bold text-4xl text-center mb-6 uppercase tracking-tighter text-yellow-400 font-heading" style="color:${heading}">${meal.strMeal} - ${getDietaryStatus(meal.strCategory)}</h2>
+        <h2 class="font-bold text-4xl text-center mb-6 uppercase tracking-tighter text-yellow-400 font-heading" style="color:${l.heading}">${meal.strMeal} - ${getDietaryStatus(meal.strCategory)}</h2>
         <div class="img_div w-72 md:w-96 rounded-full overflow-hidden shadow-2xl border-8 border-gray-700">
           <img src="${meal.strMealThumb}" class="w-full h-auto object-cover scale-110 hover:scale-100 transition-transform duration-500">
         </div>
@@ -139,7 +143,7 @@ async function recipeBook() {
 
       <section class="ingredient w-full lg:w-1/3 flex justify-center order-3">
         <div class="max-w-lg text-center">
-          <h3 class="font-bold text-2xl mb-4" style="color:${heading}">Ingredients</h3>
+          <h3 class="font-bold text-2xl mb-4" style="color:${l.heading}">Ingredients</h3>
           <ul class="grid grid-cols-3 gap-1 text-xs capitalize ">
             ${ingredientsList}
           </ul>

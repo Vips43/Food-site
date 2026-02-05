@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <link rel="stylesheet" href="src/output.css">
     <title>Category</title>
 </head>
 
-<body class="bg-gray-400">
-    <h3 id="h3" class="text-center text-2xl font-semibold my-5">Category</h3>
-    <main id="catsDishes" class="bg-gray-400 flex gap-2 justify-center flex-wrap py-2">
+<body class="bg-gray-800 text-black dark:text-white">
+    
+  <div id="navbar" class="sticky top-0"></div>
+
+    <h3 id="h3" class="dark:bg-neutral-600 bg-neutral-400 dark:text-white text-center text-2xl font-semibold py-10">Category</h3>
+    <main id="catsDishes" class="dark:bg-gray-800 bg-gray-400 flex gap-2 justify-center flex-wrap py-2">
     </main>
 
     <script type="module" src="scripts/category.js"></script>
+    <script type="module" src="scripts/misc.js"></script>
 </body>
 
 </html>
