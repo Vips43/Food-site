@@ -63,3 +63,17 @@ export const colors = [
     heading:"#296374"
   },
 ]
+const themeToggle = document.getElementById("themeToggle")
+if(themeToggle){
+ themeToggle.addEventListener("click",()=>{
+
+   document.documentElement.classList.toggle(
+     "dark",
+     localStorage.theme === "dark" ||
+     (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+    );
+    localStorage.theme = "light";
+    localStorage.theme = "dark";
+    localStorage.removeItem("theme");
+  })
+}

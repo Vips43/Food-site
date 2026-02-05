@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8">
@@ -14,24 +14,38 @@
 </head>
 
 
-<body class="scrollbar-hide ">
-  <nav class="h-16 flex items-center justify-around relative text-white overflow-hidden bg-neutral-600">
-    <div>
-      <h3 class="font-semibold text-2xl">Food Corner</h3>
-    </div>
-    <div
-      class="group flex items-center w-full max-w-md bg-white border border-slate-200 rounded-full px-4 py-2 transition-all duration-300 hover:shadow-md focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100">
+<body class="scrollbar-hide">
+  <nav class="sticky top-0 z-50 backdrop-blur-md text-white bg-neutral-900/70 border-b border-white/10">
+    <div class="max-w-screen-xl mx-auto px-4 md:px-8 h-16 flex items-center gap-4">
 
-      <input type="search" id="search" placeholder="Search anything..."
-        class="flex-1 px-3 bg-transparent text-slate-700 text-sm outline-none placeholder:text-slate-400">
-
-      <div class="flex-shrink-0 text-slate-400 group-focus-within:text-blue-500 transition-colors duration-300">
-        <i class="fa-solid fa-magnifying-glass"></i>
+      <!-- Logo -->
+      <div class="font-bold text-lg md:text-xl whitespace-nowrap">
+        🍽️ Food Corner
       </div>
+
+      <!-- Search -->
+      <div class="flex-1 flex justify-center dark:bg-neutral-900 rounded-full">
+        <div
+          class="group flex items-center w-full max-w-lg dark:bg-neutral-700 dark:text-slate-300 bg-white/90 text-slate-700 rounded-full px-4 py-2 shadow-inner transition focus-within:ring-4 focus-within:ring-amber-400/40">
+
+          <input type="search" placeholder="Search meals..."
+            class="flex-1 px-2 bg-transparent text-sm outline-none placeholder:text-slate-400">
+
+          <i class="fa-solid fa-magnifying-glass text-slate-400 group-focus-within:text-amber-500 transition"></i>
+        </div>
+      </div>
+      <button id="themeToggle" class="px-3 py-1 rounded bg-black text-white dark:bg-white dark:text-black">
+        Toggle
+      </button>
+
+
     </div>
   </nav>
 
-  <main class="p-3">
+
+
+
+  <main class="p-3 min-h-dvh">
     <h3 class="text-center text-2xl font-semibold my-3">Meal Categories</h3>
     <ul id="catsUl" class="flex justify-center items-center flex-wrap gap-2">
       <!-- <li class="shrink-0 max-w-44 rounded-lg overflow-hidden grid gap-2 pb-1 trans" >
@@ -48,7 +62,7 @@
 
 
   <main id="main"
-    class="min-h-dvh w-dvw bg-gray-800 text-white flex overflow-x-scroll snap-x snap-mandatory scrollbar-hide overflow-y-visible">
+    class="min-h-dvh w-dvw bg-gray-800 text-white flex items-center  overflow-x-scroll snap-x snap-mandatory scrollbar-hide overflow-y-visible">
     <div class="w-screen flex-1 shrink-0 flex lg:flex-row items-center justify-center gap-10">
 
     </div>

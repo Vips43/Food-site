@@ -13,6 +13,7 @@ async function getByCats(category) {
     showSkeleton(9, catsDishes);
     const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
     const res = await fetch(url);
+    if(!res?.ok) return console.log(res.status)
     const data = await res.json();
     
     catsDishes.innerHTML = ``

@@ -2,17 +2,13 @@
 import { animate, scroll } from "https://cdn.jsdelivr.net/npm/@motionone/dom/+esm";
 import { colors, getDietaryStatus, showSkeleton } from "./misc.js";
 
-
+let serverMsg = `<p class="mt-10 text-center text-2xl font-bold mx-auto ">it seems like Server is not responding & may be server is down or please check your network may be down</p>`
 
 let main = document.getElementById('main');
 const catsUl = document.getElementById("catsUl")
-const catsDishes = document.getElementById("catsDishes")
-const nav = document.querySelector("nav")
 
 let foodItems = ['noodles', 'pasta', 'burger', 'pizza', 'Arrabiata', 'dal'];
 
-
-// Wikipedia API fetcher
 export async function getIngredientData(name) {
   try {
     const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`);
@@ -23,7 +19,6 @@ export async function getIngredientData(name) {
     return { detail, img };
   } catch { return null; }
 }
-// getIngredientData('coriander');
 
 async function recepieFinder() {
   try {
@@ -32,12 +27,13 @@ async function recepieFinder() {
         .then(r => r.json())
         .catch(() => null)
     );
+    if(!requests?.ok) (main.innerHTML= serverMsg )
     const data = await Promise.all(requests)
     localStorage.setItem("food", JSON.stringify(data))
     const ldata = JSON.parse(localStorage.getItem("food")) || []
     if (ldata) { console.log("loaded from loalcl"); return ldata; }
     return data;
-  } catch { return null; }
+  } catch(err) { console.log(err); }
 }
 
 async function getCategories() {
@@ -56,7 +52,6 @@ async function getCategories() {
 
 function renderCats() {
   getCategories().then(cats => {
-    console.log(cats)
     catsUl.innerHTML = ``
     const fragment = document.createDocumentFragment();
 
@@ -100,12 +95,13 @@ async function recipeBook() {
   const data = await recepieFinder();
   const {bg, font, heading} = colors[2]
 
+  console.log(data)
   if (!data) {
     main.innerHTML = "<p class='text-center text-red-600'>Failed to load recipes</p>";
     return;
   }
 
-  const allMeals = data.filter(d => d && d.meals).flatMap(d => d.meals);
+  const allMeals = data?.filter(d => d && d.meals).flatMap(d => d.meals);
   main.innerHTML = "";
 
   allMeals.forEach(meal => {
