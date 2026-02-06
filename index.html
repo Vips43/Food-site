@@ -38,16 +38,21 @@
     </div>
   </nav> -->
 
-  <div id="navbar"></div>
+  <div id="navbar" class="sticky top-0 z-999"></div>
 
-<div id="toast" class="fixed top-52 left-1/2 z-999 -translate-x-1/2  mx-auto w-fit p-2 hidden gap-3 bg-gray-400 transition-all duration-700">not working <span>✖</span></div>
+  <div id="toast"
+    class="fixed top-20 md:top-52 left-1/2 z-999 -translate-x-1/2  mx-auto w-fit p-2 hidden gap-3 bg-gray-400 transition-all duration-700 rounded-lg">
+    not working <span>✖</span></div>
 
-  <main class="p-3 min-h-dvh dark:text-white dark:bg-neutral-700">
-    <h3 class="text-center text-2xl font-semibold my-3">Meal Categories</h3>
-    <ul id="catsUl" class="container mx-auto flex justify-around items-center flex-wrap gap-2">
+  <main class="min-h-dvh dark:text-white dark:bg-neutral-900 px-4 py-8">
+    <h3 class="text-center text-3xl font-bold mb-8 tracking-tight">
+      Meal Categories
+    </h3>
 
+    <ul id="catsUl" class="max-w-screen-xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
     </ul>
   </main>
+
 
   <!-- main menu  -->
 
@@ -55,10 +60,10 @@
 
 
   <main id="main"
-    class="min-h-dvh w-dvw bg-gray-800 text-white flex items-center  overflow-x-scroll snap-x snap-mandatory scrollbar-hide overflow-y-visible">
-    <div class="w-screen flex-1 shrink-0 flex lg:flex-row items-center justify-center gap-10">
+    class="min-h-screen w-full text-white flex items-center  overflow-x-scroll snap-x snap-mandatory scrollbar-hide overflow-y-visible">
+    <!-- <div class="w-screen flex-1 shrink-0 flex lg:flex-row items-center justify-center gap-10">
 
-    </div>
+    </div> -->
   </main>
 
 

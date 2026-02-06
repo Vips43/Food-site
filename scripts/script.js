@@ -1,6 +1,6 @@
 
 import { animate, scroll } from "https://cdn.jsdelivr.net/npm/@motionone/dom/+esm";
-import { colors, getDietaryStatus, showSkeleton } from "./misc.js";
+import { activateLazyImages, getDietaryStatus, getThemeColors, showSkeleton } from "./misc.js";
 
 let serverMsg = `<p class="mt-10 text-center text-2xl font-bold mx-auto ">it seems like Server is not responding & may be server is down or please check your network may be down</p>`
 
@@ -27,13 +27,13 @@ async function recepieFinder() {
         .then(r => r.json())
         .catch(() => null)
     );
-    if(!requests?.ok) (main.innerHTML= serverMsg )
+    if (!requests?.ok) (main.innerHTML = serverMsg)
     const data = await Promise.all(requests)
     localStorage.setItem("food", JSON.stringify(data))
     const ldata = JSON.parse(localStorage.getItem("food")) || []
     if (ldata) { console.log("loaded from loalcl"); return ldata; }
     return data;
-  } catch(err) { console.log(err); }
+  } catch (err) { console.log(err); }
 }
 
 async function getCategories() {
@@ -57,20 +57,27 @@ function renderCats() {
 
     cats.forEach((cat, index) => {
       const li = document.createElement("li");
-      li.className = `
-        shrink-0 max-w-36 rounded-lg shadow-md dark:shadow-gray-500 overflow-hidden grid gap-2 pb-1 opacity-0 translate-y-4 transition-all duration-500
-      `;
+      li.className = `group relative rounded-xl overflow-hidden shadow-lg bg-white dark:bg-neutral-800 cursor-pointer opacity-0 translate-y-6 transition-all duration-500 hover:scale-102 hover:shadow-xl `;
 
       li.dataset.id = cat.idCategory;
       li.innerHTML = `
-        <img src='${cat.strCategoryThumb}' alt="">
-        <h3 class="text-center font-display">${cat.strCategory} </h3>
+        <div class="relative aspect-square overflow-hidden">
+          <img src="${cat.strCategoryThumb}" loading="lazy"
+              class="lazy-img w-full h-full object-contain transition-transform duration-500 group-hover:scale-110 hover:object-cover">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 dark:bg-gradient-to-t dark:from-white/70 dark:via-black/20 to-transparent"></div>
+
+          <h3 class="absolute bottom-2 left-2 text-white font-bold text-sm md:text-base">
+            ${cat.strCategory}
+          </h3>
+        </div>
       `;
 
+
       li.addEventListener("click", () => {
-      window.location.href = `category.html?category=${cat.strCategory}`;
-    });
-        ;
+        window.location.href = `category.html?category=${cat.strCategory}`;
+      });
+      ;
 
       fragment.append(li);
 
@@ -80,10 +87,11 @@ function renderCats() {
       }, index * 80);
     });
 
+    activateLazyImages();
     catsUl.append(fragment);
   });
 }
-if(catsUl){
+if (catsUl) {
   renderCats()
 }
 
@@ -95,10 +103,8 @@ if(catsUl){
 // recepie book 
 async function recipeBook() {
   const data = await recepieFinder();
-  // const {bg, font, heading} = colors[1]
-  const l = colors[1]
-  const d = colors[1]
-  
+  const theme = getThemeColors();
+
   console.log(data)
   if (!data) {
     main.innerHTML = "<p class='text-center text-red-600'>Failed to load recipes</p>";
@@ -115,27 +121,28 @@ async function recipeBook() {
       const measure = meal[`strMeasure${i}`];
 
       if (ing && ing.trim() !== "") {
-
-        ingredientsList += `
-          <li class="cursor-help text-left border-b border-dotted border-gray-400" 
-              onclick="alertIngredient('${ing}')">
-            <strong class="text-neutral-500 font-work">${ing}</strong> : <span class="font-code"> ${measure} </span>
-          </li>`;
+      ingredientsList += `
+        <li class="cursor-help text-left border-b border-dotted border-gray-400" 
+            onclick="alertIngredient('${ing}')">
+          <strong class="text-neutral-500 font-work">${ing}</strong> : <span class="font-code" style="color:${theme.font}"> ${measure} </span>
+        </li>`;
       }
     }
+
     const mealContainer = document.createElement("div");
-    mealContainer.className = "flex-none w-screen min-h-dvh flex flex-wrap lg:flex-nowrap gap-3 md:gap-8 p-10 items-center justify-center snap-start";
-    mealContainer.style.background = l.bg
+    mealContainer.className = "flex-none w-full min-h-screen flex flex-wrap lg:flex-nowrap gap-6 p-6 md:p-10 items-center justify-center snap-start";
+    main.style.background = "var(--slide-bg)";
+    mealContainer.style.color = "var(--slide-font)";
     mealContainer.innerHTML = `
       <section class="instruction w-full leading-2 lg:w-1/3 flex justify-center order-2 lg:order-1">
         <div class="max-w-md text-center">
-          <h3 class="font-bold text-2xl mb-4 font-heading" style="color:${l.heading}">Instructions</h3>
-          <p class="text-xs leading-relaxed font-code text-gray-300" style="color:${l.font}">${meal.strInstructions.substring(0, 400)}...</p>
+          <h3 class="font-bold text-2xl mb-4 font-heading" style="color:${theme.heading}">Instructions</h3>
+          <p class="text-xs leading-relaxed font-code text-gray-300" style="color:var(--slide-heading)">${meal.strInstructions.substring(0, 400)}...</p>
         </div>
       </section>
 
       <section class="w-full lg:w-1/3 flex flex-col items-center order-2 lg:order-2">
-        <h2 class="font-bold text-4xl text-center mb-6 uppercase tracking-tighter text-yellow-400 font-heading" style="color:${l.heading}">${meal.strMeal} - ${getDietaryStatus(meal.strCategory)}</h2>
+        <h2 class="font-bold text-4xl text-center mb-6 uppercase tracking-tighter text-yellow-400 font-heading" style="color:var(--slide-heading)">${meal.strMeal} - ${getDietaryStatus(meal.strCategory)}</h2>
         <div class="img_div w-72 md:w-96 rounded-full overflow-hidden shadow-2xl border-8 border-gray-700">
           <img src="${meal.strMealThumb}" class="w-full h-auto object-cover scale-110 hover:scale-100 transition-transform duration-500">
         </div>
@@ -143,7 +150,7 @@ async function recipeBook() {
 
       <section class="ingredient w-full lg:w-1/3 flex justify-center order-3">
         <div class="max-w-lg text-center">
-          <h3 class="font-bold text-2xl mb-4" style="color:${l.heading}">Ingredients</h3>
+          <h3 class="font-bold text-2xl mb-4" style="color:var(--slide-heading)">Ingredients</h3>
           <ul class="grid grid-cols-3 gap-1 text-xs capitalize ">
             ${ingredientsList}
           </ul>
@@ -185,7 +192,7 @@ if (main) {
 const innerEffects = [
   {
     img: { transform: ["scale(0.8) rotate(180deg)", "rotate(0deg) scale(1)"], opacity: [0, 1] },
-    instruction: { opacity: [0, 1], clipPath: ["inset(0 100% 0 100%)", "inset(0 0% 0 0)"] },
+    instruction: { opacity: [0, 1], clipPath: ["inset(0 100% 0 0)", "inset(0 0% 0 0)"] },
     ingredient: { opacity: [0, 1] }
   }
 ];

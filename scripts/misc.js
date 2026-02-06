@@ -1,5 +1,6 @@
 const root = document.documentElement;
 const navbar = document.getElementById("navbar")
+
 async function loadNavbar() {
   const res = await fetch("/navbar.html");
   const html = await res.text();
@@ -10,6 +11,14 @@ async function loadNavbar() {
 
   themeToggle?.addEventListener("click", () => {
     root.classList.toggle("dark");
+    // document.querySelectorAll("#main > div").forEach(slide => {
+
+    //   const theme = getThemeColors();
+    //   document.getElementById("main").style.background = theme.bg
+    //   slide.style.background = theme.bg;
+    //   slide.style.color = theme.font;
+    // });
+
 
     if (root.classList.contains("dark")) {
       localStorage.theme = "dark";
@@ -22,10 +31,10 @@ async function loadNavbar() {
   const searchBtn = document.getElementById("searchBtn")
 
   searchBtn.addEventListener("click", () => {
-    const value = runSearch(); toastBar(value)
+    runSearch(); toastBar()
   })
   search.addEventListener("keydown", e => {
-    if (e.key === "Enter") { const value = runSearch(); toastBar(value); };
+    if (e.key === "Enter") { runSearch(); toastBar(); };
   })
 
   function runSearch() {
@@ -67,6 +76,8 @@ export function getDietaryStatus(meal) {
   const vegCategories = ['Vegetarian', 'Vegan'];
   const nonVegCategories = ['Beef', 'Chicken', 'Lamb', 'Pork', 'Seafood', 'Goat'];
 
+  console.log(meal)
+
   if (vegCategories.includes(meal)) {
     return `<span class="material-symbols-outlined text-green-500">square_dot</span>`
   } else if (nonVegCategories.includes(meal)) {
@@ -77,35 +88,80 @@ export function getDietaryStatus(meal) {
 
 // <span class="material-symbols-outlined">square_dot</span>
 
-export const colors = [
+
+const colors = [
+  // Cinematic Food Show
   {
     light: {
-      bg: "#562F00",
-      font: "#FFCE99",
-      heading: "#FF9644"  // active for light
+      bg: "#2B1A0F",
+      font: "#FFE8C2",
+      heading: "#FF9F43"
+    },
+    dark: {
+      bg: "#1A0F08",
+      font: "#FFD9A0",
+      heading: "#FF7A1A"
     }
   },
+  // Midnight Kitchen
   {
-    bg: "#15173D",
-    font: "#EEEEEE",
-    heading: "#982598"
+    light: {
+      bg: "#2D2F36",
+      font: "#EAEAEA",
+      heading: "#C084FC"
+    },
+    dark: {
+      bg: "#121318",
+      font: "#F5F5F5",
+      heading: "#A855F7"
+    },
   },
   {
-    bg: "#30364F",
-    font: "#7AB2B2",
-    heading: "#576A8F" //active  for dark
+    light: {
+      bg: "#1F3A2F",
+      font: "#D8F3DC",
+      heading: "#52B788"
+    },
+    dark: {
+      bg: "#0F241B",
+      font: "#B7E4C7",
+      heading: "#40916C"
+    }
   },
+  // Neon Street Food
   {
-    bg: "#30364F",
-    font: "#E1D9BC",
-    heading: "#ACBAC4"
+    light: {
+      bg: "#1B1B2F",
+      font: "#F1F1F1",
+      heading: "#00FFF5"
+    },
+    dark: {
+      bg: "#0E0E1A",
+      font: "#FFFFFF",
+      heading: "#FF2E63"
+    }
   },
+  // Cozy Cafe
   {
-    bg: "#0C2C55",
-    font: "#629FAD",
-    heading: "#296374"
+    light: {
+      bg: "#4B3832",
+      font: "#FFF3E0",
+      heading: "#FFB347"
+    },
+    dark: {
+      bg: "#2C1E1A",
+      font: "#FFE0B2",
+      heading: "#FFA726"
+    }
   },
+
 ]
+const randomColor = colors[Math.floor(Math.random() * colors.length)]
+export function getThemeColors() {
+  const isDark = document.documentElement.classList.contains("dark");
+  return isDark ? randomColor.dark : randomColor.light;
+}
+
 // 1. Load saved theme or system preference
 if (
   localStorage.theme === "dark" ||
@@ -116,7 +172,7 @@ if (
 }
 const toast = document.getElementById("toast");
 
-function toastBar(text="Sorry this function is not available") {
+function toastBar(text = "Sorry this function is not available") {
   console.log("first")
   toast.innerHTML = `${text}<span>✖</span>`
   toast.classList.replace("hidden", "flex")
@@ -130,3 +186,31 @@ function toastBar(text="Sorry this function is not available") {
     toast.classList.replace("flex", "hidden")
   }, 2500);
 }
+
+export function activateLazyImages() {
+  const imgs = document.querySelectorAll(".lazy-img");
+
+  imgs.forEach(img => {
+    if (img.complete) reveal(img);
+    else img.addEventListener("load", () => reveal(img));
+  });
+
+  function reveal(img) {
+    img.classList.remove("opacity-0", "blur-sm", "scale-105")
+  }
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    const img = entry.target;
+
+    if (img.complete) reveal(img);
+    else img.addEventListener("load", () => reveal(img));
+
+    observer.unobserve(img);
+  });
+});
+
+document.querySelectorAll(".lazy-img").forEach(img => observer.observe(img));

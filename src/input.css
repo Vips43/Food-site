@@ -12,6 +12,18 @@
  --font-heading: "Montserrat", ui-sans-serif, system-ui;
  --font-work: "Work Sans", sans-serif;
 }
+:root {
+  --slide-bg: #4B3832;
+  --slide-font: #FFF3E0;
+  --slide-heading: #FFB347;
+}
+
+.dark {
+  --slide-bg: #2C1E1A;
+  --slide-font: #FFE0B2;
+  --slide-heading: #FFA726;
+}
+
 
 @layer utilities {
  .grCenter {
@@ -20,6 +32,7 @@
  .flexCenter {
   @apply flex items-center justify-center;
  }
+}
 
  @layer base {
   .bg-conic-metal {
@@ -33,37 +46,7 @@
     /* medium silver */ #858383 100% /* back to black */
    );
   }
-  .scrollbar-hidden::-webkit-scrollbar {
-   display: none;
-  }
-  .scrollbar-hidden {
-   -ms-overflow-style: none; /* IE and Edge */
-   scrollbar-width: none; /* Firefox */
-  }
-  /* Style the overall s5rollbar */
-  .scroller::-webkit-scrollbar {
-   width: 5px;
-   height: 12px;
-  }
-
-  /* Style the scrollbar track */
-  .scroller::-webkit-scrollbar-track {
-   background: #f8f8f8;
-   border-radius: 10px;
-  }
-
-  /* Style the scrollbar thumb */
-  .scroller::-webkit-scrollbar-thumb {
-   background: #9b9b9b;
-   border-radius: 10px;
-  }
-
-  /* Style the scrollbar thumb on hover */
-  .scroller::-webkit-scrollbar-thumb:hover {
-   background: #cecece;
-  }
- }
- .theme_toggle{
-      @apply relative before:content-["☼"] before:text-black before:text-sm dark:before:content-["☾"] dark:before:text-white before:absolute before:inset-0 before:bg-white dark:before:bg-black before:w-1/2 before:h-full before:rounded-full rounded-full dark:before:translate-x-full before:grid before:place-items-center before:transition-all before:duration-700
- }
+}
+.theme_toggle{
+     @apply relative before:content-["☼"] before:text-black before:text-sm dark:before:content-["☾"] dark:before:text-white before:absolute before:inset-0 before:bg-white dark:before:bg-black before:w-1/2 before:h-full before:rounded-full rounded-full dark:before:translate-x-full before:grid before:place-items-center before:transition-all before:duration-700
 }
