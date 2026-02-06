@@ -29,6 +29,7 @@ async function renderFullmeal(id) {
   .map(step => `<span class="mb-2 block list-decimal">${step}</span>`)
   .join("");
 
+  const youtube = meal.strYoutube ? `<a href="${meal.strYoutube}"><i class="fa-brands fa-youtube text-red-600"></i></a>` : "";
   console.log(meal)
   let ingredientsList = ``;
   for (let i = 1; i <= 20; i++) {
@@ -58,8 +59,8 @@ async function renderFullmeal(id) {
       ${getDietaryStatus(meal.strCategory)}
     </h2>
 
-    <h3 class="font-bold text-xl text-center lg:text-left">
-      Instructions
+    <h3 class="font-bold text-xl text-center lg:text-left flex justify-center items-center gap-4">
+      Instructions  ${youtube}
     </h3>
 
     <p  id="instructionsText" class="text-sm leading-relaxed text-gray-100 bg-black/20 p-4 rounded-lg max-h-[60vh] overflow-y-auto scrollbar-hide">

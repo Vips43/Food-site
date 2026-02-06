@@ -233,9 +233,7 @@ export async function select(texts) {
 
   const lang = langSelect.value;
 
-  // const instructions = document.getElementById("instructionsText");
   for (const el of texts) {
-    console.log(el)
     const source = el.dataset.original || el.innerText;
     const translated = await translateText(source, lang);
     el.innerText = translated;
