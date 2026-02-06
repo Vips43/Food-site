@@ -11,14 +11,6 @@ async function loadNavbar() {
 
   themeToggle?.addEventListener("click", () => {
     root.classList.toggle("dark");
-    // document.querySelectorAll("#main > div").forEach(slide => {
-
-    //   const theme = getThemeColors();
-    //   document.getElementById("main").style.background = theme.bg
-    //   slide.style.background = theme.bg;
-    //   slide.style.color = theme.font;
-    // });
-
 
     if (root.classList.contains("dark")) {
       localStorage.theme = "dark";
@@ -31,16 +23,19 @@ async function loadNavbar() {
   const searchBtn = document.getElementById("searchBtn")
 
   searchBtn.addEventListener("click", () => {
-    runSearch(); toastBar()
+    runSearch();
   })
   search.addEventListener("keydown", e => {
-    if (e.key === "Enter") { runSearch(); toastBar(); };
+    if (e.key === "Enter") { runSearch(); };
   })
 
   function runSearch() {
-    if (search.value) {
-      return search.value;
-    }
+    if (!search.value) {
+      toastBar("plewase enter value");
+      console.log("first")
+      return
+    };
+    window.location.href = `search.html?search=${search.value}`;
   }
 
 }
@@ -75,8 +70,6 @@ export function showSkeleton(count = 9, divs) {
 export function getDietaryStatus(meal) {
   const vegCategories = ['Vegetarian', 'Vegan'];
   const nonVegCategories = ['Beef', 'Chicken', 'Lamb', 'Pork', 'Seafood', 'Goat'];
-
-  console.log(meal)
 
   if (vegCategories.includes(meal)) {
     return `<span class="material-symbols-outlined text-green-500">square_dot</span>`
@@ -170,21 +163,27 @@ if (
 ) {
   root.classList.add("dark");
 }
-const toast = document.getElementById("toast");
 
 function toastBar(text = "Sorry this function is not available") {
-  console.log("first")
-  toast.innerHTML = `${text}<span>✖</span>`
-  toast.classList.replace("hidden", "flex")
-  toast.style.opacity = 1;
+
+  const toast = document.createElement("div");
+  toast.className = `fixed top-20 md:top-52 left-1/2 z-999 -translate-x-1/2  mx-auto w-fit p-2 flex gap-3 bg-gray-400 opacity-100 transition-all duration-700 rounded-lg`
+
+  toast.innerHTML = `${text}<span class="cursor-pointer">✖</span>`
+
+  document.body.append(toast)
 
   setTimeout(() => {
-    toast.style.opacity = 0;
+    toast.classList.replace("opacity-100", "opacity-0");
   }, 2000);
 
   setTimeout(() => {
-    toast.classList.replace("flex", "hidden")
+    toast.remove();
   }, 2500);
+
+  toast.querySelector("span").onclick=()=>{
+    toast.remove()
+  }
 }
 
 export function activateLazyImages() {
