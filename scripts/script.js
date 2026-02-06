@@ -75,7 +75,7 @@ function renderCats() {
 
 
       li.addEventListener("click", () => {
-        window.location.href = `category.html?category=${cat.strCategory}`;
+        window.location.href = `../pages/category.html?category=${encodeURIComponent(cat.strCategory)}`;
       });
       ;
 
