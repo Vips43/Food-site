@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@motionone/dom": "^10.18.0",
-    "google-translate-api": "^0.1.1"
+    "google-translate-api": "^0.1.1",
+    "google-translate-api-x": "^10.7.2"
   },
   "name": "food-site",
   "version": "1.0.0",

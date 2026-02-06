@@ -1,4 +1,4 @@
-import { getDietaryStatus } from "./misc.js";
+import { getDietaryStatus, select } from "./misc.js";
 import { getIngredientData } from "./script.js";
 
 const fullMealDetails = document.getElementById("fullMealDetails")
@@ -6,22 +6,30 @@ const fullMealDetails = document.getElementById("fullMealDetails")
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-if(id){
-    renderFullmeal(id);
+if (id) {
+  renderFullmeal(id);
 
-}else{
-    fullMealDetails.innerHTML=`<p>No meals found</p>`
+} else {
+  fullMealDetails.innerHTML = `<p>No meals found</p>`
 }
+
+
 
 async function renderFullmeal(id) {
   if (!id) { console.log("returned"); return; }
+
   fullMealDetails.classList.remove("hidden")
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
   const res = await fetch(url);
   const data = await res.json();
-  console.log(data)
   const meal = data.meals[0]
 
+  const formatted = meal.strInstructions
+  .split(/\r\n\r\n/)
+  .map(step => `<span class="mb-2 block list-decimal">${step}</span>`)
+  .join("");
+
+  console.log(meal)
   let ingredientsList = ``;
   for (let i = 1; i <= 20; i++) {
     const ing = meal[`strIngredient${i}`];
@@ -30,9 +38,9 @@ async function renderFullmeal(id) {
     if (ing && ing.trim() !== "") {
 
       ingredientsList += `
-          <li class="bg-black/20 p-2 rounded hover:bg-black/40 transition text-left" 
+          <li class=" bg-black/20 p-2 rounded hover:bg-black/40 transition text-left" 
               onclick="alertIngredient('${ing}')">
-            <strong class="text-neutral-500">${ing}</strong> : ${measure}
+            <strong class="Ingredients text-neutral-500">${ing}</strong> : <span class="Ingredients"> ${measure}</span>
           </li>`;
     }
   }
@@ -46,7 +54,7 @@ async function renderFullmeal(id) {
   <!-- Instructions -->
   <section class="instruction flex flex-col justify-center space-y-4 order-2 lg:order-1">
     <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-yellow-400 text-center lg:text-left">
-      ${meal.strMeal}
+      <span id="title"> ${meal.strMeal}</span>
       ${getDietaryStatus(meal.strCategory)}
     </h2>
 
@@ -54,8 +62,9 @@ async function renderFullmeal(id) {
       Instructions
     </h3>
 
-    <p class="text-sm leading-relaxed text-gray-100 bg-black/20 p-4 rounded-lg max-h-[60vh] overflow-y-auto scrollbar-hide">
-      ${(meal.strInstructions).split(". ").join(".<br>")}
+    <p  id="instructionsText" class="text-sm leading-relaxed text-gray-100 bg-black/20 p-4 rounded-lg max-h-[60vh] overflow-y-auto scrollbar-hide">
+      ${formatted}
+      
     </p>
   </section>
 
@@ -79,6 +88,15 @@ async function renderFullmeal(id) {
 
 
   fullMealDetails.append(mealContainer)
+
+  const desc = document.getElementById("instructionsText")
+  const ings = document.querySelectorAll(".Ingredients")
+  const title = document.getElementById("title")
+
+  langSelect.addEventListener("change",()=> {
+    select([desc, title]);
+    select([...ings])
+  });
 }
 
 window.alertIngredient = async (name) => {
@@ -102,3 +120,6 @@ window.alertIngredient = async (name) => {
   box.querySelector("button").onclick = () => box.remove();
   document.body.append(box);
 };
+
+
+

@@ -214,3 +214,31 @@ const observer = new IntersectionObserver(entries => {
 });
 
 document.querySelectorAll(".lazy-img").forEach(img => observer.observe(img));
+
+
+async function translateText(text, targetLang) {
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+  const pText = data[0].map(chunk => chunk[0]).join("");
+
+  const p = pText
+  console.log(pText)
+  return p;
+}
+
+export async function select(texts) {
+  const langSelect = document.getElementById("langSelect");
+  if (!langSelect) return;
+
+  const lang = langSelect.value;
+
+  // const instructions = document.getElementById("instructionsText");
+  for (const el of texts) {
+    console.log(el)
+    const source = el.dataset.original || el.innerText;
+    const translated = await translateText(source, lang);
+    el.innerText = translated;
+  }
+};

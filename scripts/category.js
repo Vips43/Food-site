@@ -27,7 +27,7 @@ async function getByCats() {
     div.dataset.id = meal?.idMeal;
     div.innerHTML = `
       <img src="${meal?.strMealThumb}/small" loading="lazy"
-           class="w-full mx-auto object-cover" alt="Loading...">
+           class="w-full aspect-square object-cover hover:object-contain" alt="Loading...">
       <h4 class="font-semibold text-sm text-center leading-4 line-clamp-2 px-1">
         ${meal?.strMeal} 
       </h4>
