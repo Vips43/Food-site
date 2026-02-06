@@ -2,7 +2,7 @@ const root = document.documentElement;
 const navbar = document.getElementById("navbar")
 
 async function loadNavbar() {
-  const res = await fetch("/navbar.html");
+  const res = await fetch("/pages/navbar.html");
   const html = await res.text();
 
   navbar.innerHTML = html;
@@ -35,7 +35,8 @@ async function loadNavbar() {
       console.log("first")
       return
     };
-    window.location.href = `search.html?search=${search.value}`;
+    window.location.href = "pages/search.html?search=" + encodeURIComponent(search.value);
+
   }
 
 }
