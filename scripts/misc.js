@@ -2,7 +2,10 @@ const root = document.documentElement;
 const navbar = document.getElementById("navbar")
 
 async function loadNavbar() {
-  const res = await fetch("../pages/navbar.html");
+  const base = window.location.pathname.includes("/pages/")
+  ? "../pages/navbar.html"
+  : "pages/navbar.html";
+  const res = await fetch(base);
   const html = await res.text();
 
   navbar.innerHTML = html;
