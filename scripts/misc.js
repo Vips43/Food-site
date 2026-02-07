@@ -5,10 +5,6 @@ async function loadNavbar() {
   let res = await fetch("./navbar.html");
 
   if (!res.ok) {
-    res = await fetch("./pages/navbar.html");
-  }
-
-  if (!res.ok) {
     console.error("Navbar not found");
     return;
   }
@@ -46,7 +42,7 @@ async function loadNavbar() {
       return
     };
     window.location.assign(
-      new URL("search.html?search=" + encodeURIComponent(search.value), location)
+      new URL("./search.html?search=" + encodeURIComponent(search.value), location)
     );
   }
 
