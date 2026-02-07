@@ -2,6 +2,7 @@ const root = document.documentElement;
 const navbar = document.getElementById("navbar")
 
 async function loadNavbar() {
+  const params = window.location
   let res = await fetch("./navbar.html");
 
   if (!res.ok) {
@@ -45,8 +46,8 @@ async function loadNavbar() {
       console.log("first")
       return
     };
-    const params = window.location.href
-    if (params.includes("pages")) {
+
+    if (params.href.includes("pages")) {
       window.location.assign(
         new URL("search.html?search=" + encodeURIComponent(search.value), location)
       );
@@ -54,15 +55,22 @@ async function loadNavbar() {
       window.location.assign(
         new URL("pages/search.html?search=" + encodeURIComponent(search.value), location)
       );
-
     }
   }
 
+
+  const home = document.getElementById("home");
+  new URL(params.host, location)
+
+
+  home?.addEventListener("click", () => {
+    window.location = params.origin
+  });
+  
 }
 if (navbar) {
   loadNavbar();
 }
-
 
 export function showSkeleton(count = 9, divs) {
   divs.innerHTML = "";
