@@ -64,7 +64,7 @@ async function loadNavbar() {
 
 
   home?.addEventListener("click", () => {
-    window.location = params.origin
+    window.location.href = '/'
   });
   
 }
