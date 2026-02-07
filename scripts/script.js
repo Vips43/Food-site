@@ -1,11 +1,13 @@
 
 import { animate, scroll } from "https://cdn.jsdelivr.net/npm/@motionone/dom/+esm";
-import { activateLazyImages, getDietaryStatus, getThemeColors, showSkeleton } from "./misc.js";
+import { activateLazyImages, animation, getDietaryStatus, getThemeColors, showSkeleton } from "./misc.js";
 
 let serverMsg = `<p class="mt-10 text-center text-2xl font-bold mx-auto ">it seems like Server is not responding & may be server is down or please check your network may be down</p>`
 
 let main = document.getElementById('main');
 const catsUl = document.getElementById("catsUl")
+const country_ul = document.getElementById("country_ul")
+const country_main = document.getElementById("country_main")
 
 let foodItems = ['noodles', 'pasta', 'burger', 'pizza', 'Arrabiata', 'dal'];
 
@@ -51,6 +53,7 @@ async function getCategories() {
 }
 
 function renderCats() {
+  showSkeleton(9, catsUl)
   getCategories().then(cats => {
     catsUl.innerHTML = ``
     const fragment = document.createDocumentFragment();
@@ -95,11 +98,6 @@ if (catsUl) {
   renderCats()
 }
 
-
-
-
-
-
 // recepie book 
 async function recipeBook() {
   const data = await recepieFinder();
@@ -121,7 +119,7 @@ async function recipeBook() {
       const measure = meal[`strMeasure${i}`];
 
       if (ing && ing.trim() !== "") {
-      ingredientsList += `
+        ingredientsList += `
         <li class="cursor-help text-left border-b border-dotted border-gray-400" 
             onclick="alertIngredient('${ing}')">
           <strong class="text-neutral-500 font-work">${ing}</strong> : <span class="font-code" style="color:${theme.font}"> ${measure} </span>
@@ -142,7 +140,8 @@ async function recipeBook() {
       </section>
 
       <section class="w-full lg:w-1/3 flex flex-col items-center order-2 lg:order-2">
-        <h2 class="font-bold text-4xl text-center mb-6 uppercase tracking-tighter text-yellow-400 font-heading" style="color:var(--slide-heading)">${meal.strMeal} - ${getDietaryStatus(meal.strCategory)}</h2>
+        <h2 class="font-bold text-4xl text-center uppercase tracking-tighter text-yellow-400 font-heading" style="color:var(--slide-heading)">${meal.strMeal} - ${getDietaryStatus(meal.strCategory)}</h2>
+        <p class="text-center font-semibold mb-6 underline">${meal.strArea} Dish</p>
         <div class="img_div w-72 md:w-96 rounded-full overflow-hidden shadow-2xl border-8 border-gray-700">
           <img src="${meal.strMealThumb}" class="w-full h-auto object-cover scale-110 hover:scale-100 transition-transform duration-500">
         </div>
@@ -188,48 +187,60 @@ if (main) {
 }
 
 
-
-const innerEffects = [
-  {
-    img: { transform: ["scale(0.8) rotate(180deg)", "rotate(0deg) scale(1)"], opacity: [0, 1] },
-    instruction: { opacity: [0, 1], clipPath: ["inset(0 100% 0 0)", "inset(0 0% 0 0)"] },
-    ingredient: { opacity: [0, 1] }
-  }
-];
-
-
-function animation() {
-  const slides = document.querySelectorAll("#main > div");
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry, index) => {
-        if (!entry.isIntersecting) return;
-
-        const slide = entry.target;
-        const img = slide.querySelector(".img_div");
-        const instruction = slide.querySelector(".instruction");
-        const ingredient = slide.querySelector(".ingredient");
-        const items = slide.querySelectorAll(".ingredient li");
-
-        animate(img, innerEffects[0].img, { duration: 0.8, easing: "ease-in-out" })
-        animate(instruction, innerEffects[0].instruction, { duration: 1, easing: "ease-in-out" })
-        animate(ingredient, innerEffects[0].ingredient, { duration: 0.8, easing: "ease-in-out" })
-
-        // stagger list items
-        items.forEach((li, i) => {
-          animate(li,
-            { opacity: [0, 1], transform: ["translateY(20px)", "translateY(0)"] },
-            { delay: i * 0.05, duration: 0.4 }
-          );
-        });
-
-        observer.unobserve(slide);
-      });
-    },
-    { root: main, threshold: 0.5 }
-  );
-
-  slides.forEach((slide) => observer.observe(slide));
+async function getFlags(country_name) {
+  const url = `https://restcountries.com/v3.1/name/${country_name}?fullText=true`
+  const res = await axios.get(url)
+  console.log(res.data)
 }
 
+async function getCountry_Name() {
+  const url = `https://www.themealdb.com/api/json/v1/1/list.php?a=list`
+  const res = await axios.get(url)
+  const countryNames = res.data
+
+  country_ul.innerHTML = ``
+  country_ul.classList.add("p-5")
+  const fragment = document.createDocumentFragment()
+  countryNames.meals.forEach((name) => {
+    const li = document.createElement("li");
+    li.classList.add(`bg-gray-500`, `py-2`, `rounded-lg`, `text-white`, `cursor-pointer`, `hover:underline`);
+    li.innerText = name?.strArea
+    fragment.append(li)
+
+    li.addEventListener("click", (e) => {
+      country_ul.querySelectorAll("li").forEach(l => { l.classList.replace("text-selected", "text-white"); })
+
+      e.target.classList.replace("text-white", "text-selected");
+    })
+  })
+  country_ul.append(fragment)
+}
+
+let isTrue = true;
+country_main.querySelector("h3").addEventListener("click", async () => {
+  if (isTrue) {
+    country_main.querySelector("h3 i").classList.add("transition-all", "rotate-90")
+    loading(country_ul)
+    await getCountry_Name()
+    isTrue = false;
+  } else {
+    country_main.querySelector("h3 i").classList.remove("rotate-90")
+
+    country_ul.classList.remove("p-5")
+    country_ul.innerHTML = ``
+    isTrue = true
+  }
+
+})
+
+function loading(dummy) {
+  country_ul.innerHTML = ``
+
+  const frag = document.createDocumentFragment()
+  for (let i = 0; i < 20; i++) {
+    const subDiv = document.createElement("div")
+    subDiv.className = `bg-gray-800 w-full h-10 animate-pulse rounded-lg`
+    frag.append(subDiv)
+  }
+  dummy.append(frag)
+}

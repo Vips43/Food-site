@@ -1,3 +1,5 @@
+import { animate, scroll } from "https://cdn.jsdelivr.net/npm/@motionone/dom/+esm";
+
 const root = document.documentElement;
 const navbar = document.getElementById("navbar")
 
@@ -5,12 +7,11 @@ async function loadNavbar() {
   let res;
   const params = window.location
 
-  if (params.href.includes("pages")){
+  if (params.href.includes("pages")) {
     res = await fetch("./navbar.html");
-  }else{
+  } else {
     res = await fetch("./pages/navbar.html");
   }
-  
 
   if (!res.ok) {
     console.error("Navbar not found");
@@ -19,7 +20,6 @@ async function loadNavbar() {
 
   const html = await res.text();
   navbar.innerHTML = html;
-
 
   const themeToggle = document.getElementById("themeToggle");
 
@@ -61,15 +61,12 @@ async function loadNavbar() {
     }
   }
 
-
   const home = document.getElementById("home");
   new URL(params.host, location)
-
 
   home?.addEventListener("click", () => {
     window.location.href = '/'
   });
-  
 }
 if (navbar) {
   loadNavbar();
@@ -270,3 +267,47 @@ export async function select(texts) {
     el.innerText = translated;
   }
 };
+
+const innerEffects = [
+  {
+    img: { transform: ["scale(0.8) rotate(180deg)", "rotate(0deg) scale(1)"], opacity: [0, 1] },
+    instruction: { opacity: [0, 1], clipPath: ["inset(0 100% 0 0)", "inset(0 0% 0 0)"] },
+    ingredient: { opacity: [0, 1] }
+  }
+];
+
+export function animation() {
+  const slides = document.querySelectorAll("#main > div");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, index) => {
+        if (!entry.isIntersecting) return;
+
+        const slide = entry.target;
+        const img = slide.querySelector(".img_div");
+        const instruction = slide.querySelector(".instruction");
+        const ingredient = slide.querySelector(".ingredient");
+        const items = slide.querySelectorAll(".ingredient li");
+
+        animate(img, innerEffects[0].img, { duration: 0.8, easing: "ease-in-out" })
+        animate(instruction, innerEffects[0].instruction, { duration: 1, easing: "ease-in-out" })
+        animate(ingredient, innerEffects[0].ingredient, { duration: 0.8, easing: "ease-in-out" })
+
+        // stagger list items
+        items.forEach((li, i) => {
+          animate(li,
+            { opacity: [0, 1], transform: ["translateY(20px)", "translateY(0)"] },
+            { delay: i * 0.05, duration: 0.4 }
+          );
+        });
+
+        observer.unobserve(slide);
+      });
+    },
+    { root: main, threshold: 0.5 }
+  );
+
+  slides.forEach((slide) => observer.observe(slide));
+}
+

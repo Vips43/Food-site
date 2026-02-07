@@ -11,17 +11,18 @@
  --font-sans: "Inter", ui-sans-serif, system-ui;
  --font-heading: "Montserrat", ui-sans-serif, system-ui;
  --font-work: "Work Sans", sans-serif;
+ --color-selected: #f4581d;
 }
 :root {
-  --slide-bg: #4B3832;
-  --slide-font: #FFF3E0;
-  --slide-heading: #FFB347;
+  --slide-bg: #2D2F36;
+  --slide-font: #EAEAEA;
+  --slide-heading: #C084FC;
 }
 
 .dark {
-  --slide-bg: #2C1E1A;
-  --slide-font: #FFE0B2;
-  --slide-heading: #FFA726;
+  --slide-bg: #121318;
+  --slide-font: #F5F5F5;
+  --slide-heading: #A855F7;
 }
 
 

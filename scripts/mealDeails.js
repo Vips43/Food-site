@@ -18,7 +18,6 @@ if (id) {
 async function renderFullmeal(id) {
   if (!id) { console.log("returned"); return; }
 
-  fullMealDetails.classList.remove("hidden")
   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
   const res = await fetch(url);
   const data = await res.json();
@@ -47,17 +46,25 @@ async function renderFullmeal(id) {
   }
 
   fullMealDetails.innerHTML = ``
+  fullMealDetails.style.background = "var(--slide-bg)";
 
   const mealContainer = document.createElement("div");
-  mealContainer.className = `w-full flex flex-col lg:flex-row gap-8 p-6 md:p-12 text-white `;
+  mealContainer.className = `w-full flex flex-col lg:grid grid-cols-3 gap-5 p-6 md:p-12 text-white `;
 
   mealContainer.innerHTML = `
   <!-- Instructions -->
+  
+  <h2 class="text-3xl hidden lg:block col-span-3 md:text-4xl font-black uppercase tracking-tight text-yellow-400 text-center mx-auto lg:text-left">
+    <span id="title"> ${meal.strMeal}</span>
+    ${getDietaryStatus(meal.strCategory)}
+  </h2>
+  
   <section class="instruction flex flex-col justify-center space-y-4 order-2 lg:order-1">
-    <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-yellow-400 text-center lg:text-left">
+    <h2 class="text-3xl lg:hidden md:text-4xl font-black uppercase tracking-tight text-yellow-400 text-center lg:text-left">
       <span id="title"> ${meal.strMeal}</span>
       ${getDietaryStatus(meal.strCategory)}
     </h2>
+    <p class="text-center font-semibold underline">${meal.strArea} Dish</p>
 
     <h3 class="font-bold text-xl text-center lg:text-left flex justify-center items-center gap-4">
       Instructions  ${youtube}
@@ -81,7 +88,7 @@ async function renderFullmeal(id) {
   <section class="ingredient flex flex-col items-center space-y-4 order-3">
     <h3 class="font-bold text-xl">Ingredients</h3>
 
-    <ul class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm w-full">
+    <ul class="grid grid-cols-2 gap-2 text-sm w-full">
       ${ingredientsList}
     </ul>
   </section>

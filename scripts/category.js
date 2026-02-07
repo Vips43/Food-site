@@ -22,7 +22,7 @@ async function getByCats() {
   data.meals.forEach((meal, index) => {
       
     const div = document.createElement("div");
-    div.className = "w-full dark:bg-neutral-900 border border-gray-300 rounded-lg bg-white opacity-0 translate-y-6 transition-all duration-1000 ease-out overflow-hidden grid gap-2 pb-1 relative cursor-pointer";
+    div.className = "w-full dark:bg-neutral-900 rounded-lg bg-white opacity-0 translate-y-6 transition-all duration-1000 ease-out overflow-hidden grid gap-2 pb-1 relative cursor-pointer";
 
     div.dataset.id = meal?.idMeal;
     div.innerHTML = `

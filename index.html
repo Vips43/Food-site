@@ -4,18 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=square_dot" />
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍽️</text></svg>">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=square_dot" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+  
   <link rel="stylesheet" href="./src/output.css">
   <link rel="stylesheet" href="styles/style.css">
-  <title>Document</title>
+
+  <title>Recepie-site</title>
 </head>
 
 
-<body class="scrollbar-hide">
-  
+<body class="scrollbar-hide bg-white dark:bg-black">
+
   <div id="navbar" class="sticky top-0 z-999"></div>
 
 
@@ -24,16 +30,20 @@
       Meal Categories
     </h3>
 
-    <ul id="catsUl" class="max-w-screen-xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+    <ul id="catsUl" class="max-w-screen-xl mx-auto grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-6">
     </ul>
   </main>
 
+  <!-- get meal by country -->
+  <main id="country_main" class="my-5 bg-neutral-600 dark:bg-black h-auto">
+    <h3 class="text-2xl font-semibold p-2 bg-gray-600 text-white flex items-center justify-between px-5 select-none cursor-pointer">Sort by Coutry Names <i class="fa-solid fa-angle-right"></i></h3>
+    
+    <ul id="country_ul" class="grid grid-cols-4 font-code md:grid-cols-6 gap-4 text-center select-none">
+      <!-- <li class="bg-gray-500 py-2 rounded-lg text-white ">indian</li> -->
+    </ul>
+  </main>
 
   <!-- main menu  -->
-
-
-
-
   <main id="main"
     class="min-h-screen w-full text-white flex items-center  overflow-x-scroll snap-x snap-mandatory scrollbar-hide overflow-y-visible">
     <!-- <div class="w-screen flex-1 shrink-0 flex lg:flex-row items-center justify-center gap-10">
@@ -44,7 +54,7 @@
 
   <script type="module" src="scripts/misc.js"></script>
   <script type="module" src="scripts/script.js"></script>
-
+  <script src="js.js"></script>
 </body>
 
 </html>
