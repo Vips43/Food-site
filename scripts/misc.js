@@ -45,7 +45,7 @@ async function loadNavbar() {
       console.log("first")
       return
     };
-    window.location.href = "./pages/search.html?search=" + encodeURIComponent(search.value);
+    window.location.href = "pages/search.html?search=" + encodeURIComponent(search.value);
 
   }
 
