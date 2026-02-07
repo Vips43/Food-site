@@ -2,13 +2,20 @@ const root = document.documentElement;
 const navbar = document.getElementById("navbar")
 
 async function loadNavbar() {
-  const base = window.location.pathname.includes("/pages/")
-  ? "../pages/navbar.html"
-  : "pages/navbar.html";
-  const res = await fetch(base);
-  const html = await res.text();
+  let res = await fetch("./navbar.html");
 
+  if (!res.ok) {
+    res = await fetch("./pages/navbar.html");
+  }
+
+  if (!res.ok) {
+    console.error("Navbar not found");
+    return;
+  }
+
+  const html = await res.text();
   navbar.innerHTML = html;
+
 
   const themeToggle = document.getElementById("themeToggle");
 
@@ -34,11 +41,11 @@ async function loadNavbar() {
 
   function runSearch() {
     if (!search.value) {
-      toastBar("plewase enter value");
+      toastBar("please enter value");
       console.log("first")
       return
     };
-    window.location.href = "pages/search.html?search=" + encodeURIComponent(search.value);
+    window.location.href = "/pages/search.html?search=" + encodeURIComponent(search.value);
 
   }
 
@@ -185,7 +192,7 @@ function toastBar(text = "Sorry this function is not available") {
     toast.remove();
   }, 2500);
 
-  toast.querySelector("span").onclick=()=>{
+  toast.querySelector("span").onclick = () => {
     toast.remove()
   }
 }
