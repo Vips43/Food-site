@@ -48,8 +48,6 @@ async function loadNavbar() {
     window.location.assign(
       new URL("pages/search.html?search=" + encodeURIComponent(search.value), location)
     );
-
-
   }
 
 }
