@@ -5,6 +5,10 @@ async function loadNavbar() {
   let res = await fetch("./navbar.html");
 
   if (!res.ok) {
+    res = await fetch("./pages/navbar.html");
+  }
+
+  if (!res.ok) {
     console.error("Navbar not found");
     return;
   }
@@ -41,9 +45,17 @@ async function loadNavbar() {
       console.log("first")
       return
     };
-    window.location.assign(
-      new URL("./search.html?search=" + encodeURIComponent(search.value), location)
-    );
+    const params = window.location.href
+    if (params.includes("pages")) {
+      window.location.assign(
+        new URL("search.html?search=" + encodeURIComponent(search.value), location)
+      );
+    } else {
+      window.location.assign(
+        new URL("pages/search.html?search=" + encodeURIComponent(search.value), location)
+      );
+
+    }
   }
 
 }
