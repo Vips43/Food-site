@@ -2,12 +2,15 @@ const root = document.documentElement;
 const navbar = document.getElementById("navbar")
 
 async function loadNavbar() {
+  let res;
   const params = window.location
-  let res = await fetch("./navbar.html");
 
-  if (!res.ok) {
+  if (params.href.includes("pages")){
+    res = await fetch("./navbar.html");
+  }else{
     res = await fetch("./pages/navbar.html");
   }
+  
 
   if (!res.ok) {
     console.error("Navbar not found");
