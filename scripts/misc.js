@@ -46,7 +46,7 @@ async function loadNavbar() {
       return
     };
     window.location.assign(
-      new URL("pages/search.html?search=" + encodeURIComponent(search.value), location)
+      new URL("search.html?search=" + encodeURIComponent(search.value), location)
     );
   }
 
