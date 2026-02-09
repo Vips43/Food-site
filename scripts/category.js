@@ -42,7 +42,6 @@ export async function getByCats(txt, c, url) {
     if (!res?.ok) return console.log(res.status)
 
     const data = await res.json();
-    console.log(data)
     renderCategories(txt, c, data?.meals)
   } catch (error) {
     console.log("there is an error: ", error)

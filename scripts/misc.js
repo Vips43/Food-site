@@ -1,4 +1,5 @@
 import { animate, scroll } from "https://cdn.jsdelivr.net/npm/@motionone/dom/+esm";
+import { getKeyWord } from "./search.js";
 
 const root = document.documentElement;
 const navbar = document.getElementById("navbar")
@@ -35,6 +36,8 @@ async function loadNavbar() {
 
   const search = document.getElementById("search")
   const searchBtn = document.getElementById("searchBtn")
+  const dropDownUl = document.getElementById("dropDownUl")
+  
 
   searchBtn.addEventListener("click", () => {
     runSearch();
@@ -43,10 +46,15 @@ async function loadNavbar() {
     if (e.key === "Enter") { runSearch(); };
   })
 
+  search.addEventListener("input", async(e) => {
+    dropDownUl.innerHTML = ``;
+    dropDownUl.classList.remove("hidden");
+    await getKeyWord(e.target.value, dropDownUl, search);
+  })
+
   function runSearch() {
     if (!search.value) {
       toastBar("please enter value");
-      console.log("first")
       return
     };
 

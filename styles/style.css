@@ -23,6 +23,9 @@
 #ingredientUl::-webkit-scrollbar{
   display: none;
 }
+.scrollbar-hide::-webkit-scrollbar{
+  display: none;
+}
 body {
   font-family: system-ui, sans-serif;
   background: linear-gradient(135deg, #f3f4f6, #e5e7eb);

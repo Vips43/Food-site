@@ -1,12 +1,6 @@
 import { getDietaryStatus, select } from "./misc.js";
 import { getIngredientData } from "./script.js";
 
-function setFavIcon(){
-  const favIcon = document.getElementById("favicon")
-  favIcon.href = ``
-}
-
-
 const fullMealDetails = document.getElementById("fullMealDetails")
 
 const params = new URLSearchParams(window.location.search);
@@ -35,7 +29,9 @@ async function renderFullmeal(id) {
   .join("");
 
   const youtube = meal.strYoutube ? `<a href="${meal.strYoutube}"><i class="fa-brands fa-youtube text-red-600"></i></a>` : "";
+  
   console.log(meal)
+
   let ingredientsList = ``;
   for (let i = 1; i <= 20; i++) {
     const ing = meal[`strIngredient${i}`];

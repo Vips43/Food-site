@@ -10,15 +10,18 @@
 
       <!-- Search -->
       <div class="flex-1 max-w-lg ml-auto flex justify-center dark:bg-neutral-900 rounded-full">
-        <div
-          class="group flex items-center w-full max-w-lg dark:bg-neutral-700 dark:text-slate-300 bg-white/90 text-slate-700 rounded-full px-4 py-2 shadow-inner transition focus-within:ring-4 focus-within:ring-amber-400/40">
+        <div 
+          class="relative group flex items-center w-full max-w-lg dark:bg-neutral-700 dark:text-slate-300 bg-white/90 text-slate-700 rounded-full px-4 py-2 shadow-inner transition focus-within:ring-4 focus-within:ring-amber-400/40">
 
-          <input id="search" type="search" placeholder="Search meals..."
+          <input id="search" type="search" placeholder="Search meals... / Enter 1st letter"
             class="flex-1 px-2 bg-transparent text-sm outline-none placeholder:text-slate-400">
 
             <button id="searchBtn" class="text-slate-400 group-focus-within:text-amber-500 transition">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
+            <ul id="dropDownUl" class="absolute hidden top-full bg-white dark:bg-black min-w-3/4 shadow-lg h-64 overflow-auto transition-all rounded-md duration-700 scrollbar-hide">
+              <!-- <li class="hover:bg-gray-200 px-1 py-0.5 cursor-pointer">hello</li> -->
+            </ul>
         </div>
       </div>
       <button id="themeToggle" class="w-10 h-5 rounded bg-black text-white dark:bg-white dark:text-black theme_toggle">

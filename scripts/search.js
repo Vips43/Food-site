@@ -5,6 +5,31 @@ const searchDiv = document.getElementById("search");
 const params = new URLSearchParams(window.location.search);
 const str = params.get("search")
 
+
+
+export async function getKeyWord(str, ul, search) {
+    try {
+        const res = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?f=${str}`)
+
+        return renderSearchList(res.data, ul, search)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+function renderSearchList(params, ul, search) {
+    params.meals.forEach((meal, i) => {
+        const li = document.createElement("li");
+        li.className = `hover:bg-gray-200 hover:text-black px-1 py-0.5 cursor-pointer`;
+        li.textContent = meal.strMeal;
+        li.addEventListener("click", () => {
+            search.value = li.textContent;
+            ul.classList.add("hidden");
+        })
+        ul.append(li)
+    })
+}
+
 async function fetchSearch() {
     try {
         const res = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${str}`)
@@ -14,7 +39,7 @@ async function fetchSearch() {
         console.log(error)
     }
 }
-fetchSearch()
+// fetchSearch()
 
 async function getSearched() {
     const searches = await fetchSearch();
@@ -22,7 +47,7 @@ async function getSearched() {
 
     const fragment = document.createDocumentFragment()
     searches?.meals?.forEach((search, index) => {
-        console.log(search)
+        // console.log(search)
         const category = search.strCategory;
 
         const div = document.createElement("div");
@@ -47,4 +72,6 @@ async function getSearched() {
     })
     searchDiv.append(fragment)
 }
-getSearched()
+if (searchDiv) {
+    getSearched()
+}

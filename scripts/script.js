@@ -15,7 +15,7 @@ export async function getIngredientData(name) {
   const controller = new AbortController();
   const signal = controller.signal;
   try {
-    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`,{signal});
+    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`, { signal });
     const detail = await res.json();
     console.log(detail)
     const img = `https://www.themealdb.com/images/ingredients/${name}.png`
@@ -29,7 +29,7 @@ async function recepieFinder() {
   const signal = controller.signal;
   try {
     const requests = foodItems.map(foo =>
-      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foo}`,{signal})
+      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foo}`, { signal })
         .then(r => r.json())
         .catch(() => null)
     );
@@ -194,17 +194,28 @@ async function getFlags(country_name) {
   console.log(res.data)
 }
 
-async function getCountry_Name() {
-  const url = `https://www.themealdb.com/api/json/v1/1/list.php?a=list`
-  const res = await axios.get(url)
-  const countryNames = res.data
-
-  country_ul.innerHTML = ``
-  country_ul.classList.add("p-5")
+const cache = {}
+async function getCountry_Name(key) {
+  if (cache[key]) {
+    console.log("cahced")
+    return renderCountries(cache[key])
+  }
+  
+  const url = `https://www.themealdb.com/api/json/v1/1/list.php?a=list`;
+  const res = await axios.get(url);
+  const countryNames = res.data;
+  
+  cache[key] = countryNames;
+  console.log("fetched")
+  return renderCountries(countryNames);
+}
+function renderCountries(data){ 
+  country_ul.innerHTML = ``;
+  country_ul.classList.add("p-5");
 
   const fragment = document.createDocumentFragment()
 
-  countryNames.meals.forEach((name, i) => {
+  data.meals.forEach((name, i) => {
     const li = document.createElement("li");
     li.className = `
       bg-gray-500 py-2 rounded-lg text-white cursor-pointer hover:underline
@@ -239,7 +250,7 @@ if (country_main && country_ul) {
 
       country_ul.classList.add("p-5");
       loading(country_ul);
-      await getCountry_Name();
+      await getCountry_Name("countries");
       isTrue = true;
     } else {
       icon.classList.remove("rotate-90")
