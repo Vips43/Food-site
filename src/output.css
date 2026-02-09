@@ -295,6 +295,9 @@
   .z-999 {
     z-index: 999;
   }
+  .z-\[99\] {
+    z-index: 99;
+  }
   .z-\[999\] {
     z-index: 999;
   }
@@ -722,6 +725,18 @@
   .bg-gray-400 {
     background-color: var(--color-gray-400);
   }
+  .bg-gray-400\/50 {
+    background-color: color-mix(in srgb, oklch(70.7% 0.022 261.325) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-gray-400) 50%, transparent);
+    }
+  }
+  .bg-gray-400\/80 {
+    background-color: color-mix(in srgb, oklch(70.7% 0.022 261.325) 80%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-gray-400) 80%, transparent);
+    }
+  }
   .bg-gray-500 {
     background-color: var(--color-gray-500);
   }
@@ -850,8 +865,14 @@
   .py-10 {
     padding-block: calc(var(--spacing) * 10);
   }
+  .pt-2 {
+    padding-top: calc(var(--spacing) * 2);
+  }
   .pb-1 {
     padding-bottom: calc(var(--spacing) * 1);
+  }
+  .pb-2 {
+    padding-bottom: calc(var(--spacing) * 2);
   }
   .text-center {
     text-align: center;
@@ -1060,6 +1081,14 @@
   .duration-1000 {
     --tw-duration: 1000ms;
     transition-duration: 1000ms;
+  }
+  .duration-7001 {
+    --tw-duration: 7001ms;
+    transition-duration: 7001ms;
+  }
+  .duration-70011 {
+    --tw-duration: 70011ms;
+    transition-duration: 70011ms;
   }
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
@@ -1349,6 +1378,22 @@
       background-color: var(--color-gray-800);
     }
   }
+  .dark\:bg-gray-800\/50 {
+    &:where(.dark, .dark *) {
+      background-color: color-mix(in srgb, oklch(27.8% 0.033 256.848) 50%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-gray-800) 50%, transparent);
+      }
+    }
+  }
+  .dark\:bg-gray-800\/80 {
+    &:where(.dark, .dark *) {
+      background-color: color-mix(in srgb, oklch(27.8% 0.033 256.848) 80%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-gray-800) 80%, transparent);
+      }
+    }
+  }
   .dark\:bg-gray-900 {
     &:where(.dark, .dark *) {
       background-color: var(--color-gray-900);
@@ -1425,6 +1470,14 @@
   .dark\:text-white {
     &:where(.dark, .dark *) {
       color: var(--color-white);
+    }
+  }
+  .dark\:text-white\/50 {
+    &:where(.dark, .dark *) {
+      color: color-mix(in srgb, #fff 50%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        color: color-mix(in oklab, var(--color-white) 50%, transparent);
+      }
     }
   }
 }

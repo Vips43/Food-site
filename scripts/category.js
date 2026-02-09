@@ -84,12 +84,15 @@ export const renderCategories = (txt, c, data) => {
 
 document.onscroll = () => {
   const y = window.pageYOffset
-  if (y > 80) {
-    h3.style.transition = `all .2s ease-in-out`
+  if (y > 100) {
+    h3.style.transition = `all .3s ease-in-out`;
+    h3.style.opacity = `1`;
     h3.style.transform = `translateX(0px)`
-    h3.classList.add('fixed', "z-99", "top-16", "bg-gray-400", "dark:bg-gray-800", "w-full", "p-2", "text-center", "text-lg",)
+    h3.classList.add('fixed', 'z-[99]', 'top-16', 'bg-gray-400/80', 'dark:bg-gray-800/80', 'w-full', 'pt-2', 'pb-2', 'text-center', 'text-lg', 'duration-500', 'transition-all');
   } else {
-    h3.classList.remove('fixed', "z-99", "top-16", "bg-gray-400", "dark:bg-gray-800", "w-full", "p-2", "text-center", "text-lg",)
-    h3.style.transform = `translateY(${y * 2}px)`
+    h3.style.transition = `none`;
+    h3.style.opacity = `${1 - y / 100}`;
+    h3.classList.remove('fixed', 'z-[99]', 'top-16', 'bg-gray-400/80', 'dark:bg-gray-800/80', 'w-full', 'pt-2', 'pb-2', 'text-center', 'text-lg',);
+    h3.style.transform = `translateY(${-y * 0.5}px)`
   }
 }
