@@ -318,3 +318,23 @@ export function animation() {
 
   slides.forEach((slide) => observer.observe(slide));
 }
+
+
+export function pageLoader() {
+  const div = document.createElement("div");
+
+  div.id = "pageLoader";
+  div.className =
+    "fixed inset-0 z-[9999] flex items-center justify-center bg-black text-white transition-opacity duration-500";
+
+  div.innerHTML = `
+    <div class="flex flex-col items-center gap-4">
+      <div class="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+      <p class="text-lg font-semibold">Cooking meals…</p>
+    </div>
+  `;
+
+  document.body.append(div);
+
+  return div;
+}

@@ -1,7 +1,17 @@
 import { getByCats } from "./category.js";
-import { activateLazyImages, animation, getDietaryStatus, getThemeColors, showSkeleton } from "./misc.js";
+import { activateLazyImages, animation, getDietaryStatus, getThemeColors, pageLoader, showSkeleton } from "./misc.js";
 
 let serverMsg = `<p class="mt-10 text-center text-2xl font-bold mx-auto ">it seems like Server is not responding & may be server is down or please check your network may be down</p>`
+
+const loader = pageLoader();
+
+window.addEventListener("load", () => {
+  loader.style.opacity = "0";
+
+  setTimeout(() => loader.remove(), 500);
+});
+
+
 
 let main = document.getElementById('main');
 const catsUl = document.getElementById("catsUl")
@@ -9,11 +19,13 @@ const country_ul = document.getElementById("country_ul")
 const country_main = document.getElementById("country_main")
 const browseByName = document.getElementById("browseByName")
 
+
 let foodItems = ['noodles', 'pasta', 'burger', 'pizza', 'Arrabiata', 'dal'];
 
 export async function getIngredientData(name) {
   const controller = new AbortController();
   const signal = controller.signal;
+  isLoading = true;
   try {
     const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`, { signal });
     const detail = await res.json();
@@ -24,9 +36,11 @@ export async function getIngredientData(name) {
   } catch { return null; }
 }
 
+
 async function recepieFinder() {
   const controller = new AbortController();
   const signal = controller.signal;
+
   try {
     const requests = foodItems.map(foo =>
       fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foo}`, { signal })
@@ -40,6 +54,7 @@ async function recepieFinder() {
     if (ldata) { console.log("loaded from loalcl"); return ldata; }
     return data;
   } catch (err) { console.log(err); }
+  
 }
 
 async function getCategories() {
@@ -200,16 +215,16 @@ async function getCountry_Name(key) {
     console.log("cahced")
     return renderCountries(cache[key])
   }
-  
+
   const url = `https://www.themealdb.com/api/json/v1/1/list.php?a=list`;
   const res = await axios.get(url);
   const countryNames = res.data;
-  
+
   cache[key] = countryNames;
   console.log("fetched")
   return renderCountries(countryNames);
 }
-function renderCountries(data){ 
+function renderCountries(data) {
   country_ul.innerHTML = ``;
   country_ul.classList.add("p-5");
 

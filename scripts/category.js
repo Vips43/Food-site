@@ -1,4 +1,14 @@
-import { getDietaryStatus, showSkeleton } from "./misc.js";
+import { getDietaryStatus, pageLoader, showSkeleton } from "./misc.js";
+
+
+
+const loader = pageLoader();
+
+window.addEventListener("load", () => {
+  loader.style.opacity = "0";
+
+  setTimeout(() => loader.remove(), 500);
+});
 
 const catsDishes = document.querySelector("#catsDishes > div");
 const h3 = document.getElementById("h3");

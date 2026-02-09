@@ -1,5 +1,14 @@
-import { getDietaryStatus, select } from "./misc.js";
+import { getDietaryStatus, pageLoader, select } from "./misc.js";
 import { getIngredientData } from "./script.js";
+
+const loader = pageLoader();
+
+window.addEventListener("load", () => {
+  loader.style.opacity = "0";
+
+  setTimeout(() => loader.remove(), 500);
+});
+
 
 const fullMealDetails = document.getElementById("fullMealDetails")
 

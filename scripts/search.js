@@ -1,10 +1,18 @@
-import { getDietaryStatus } from "./misc.js";
+import { getDietaryStatus, pageLoader } from "./misc.js";
 
 const searchDiv = document.getElementById("search");
 
 const params = new URLSearchParams(window.location.search);
 const str = params.get("search")
 
+
+const loader = pageLoader();
+
+window.addEventListener("load", () => {
+  loader.style.opacity = "0";
+
+  setTimeout(() => loader.remove(), 500);
+});
 
 
 export async function getKeyWord(str, ul, search) {
