@@ -38,7 +38,7 @@ export async function getByCats(txt, c, url) {
   showSkeleton(9, catsDishes);
   try {
 
-    const res = await fetch(url, {signal});
+    const res = await fetch(url, { signal });
     if (!res?.ok) return console.log(res.status)
 
     const data = await res.json();
@@ -80,4 +80,16 @@ export const renderCategories = (txt, c, data) => {
     fragment.append(div);
   });
   catsDishes.append(fragment)
+}
+
+document.onscroll = () => {
+  const y = window.pageYOffset
+  if (y > 80) {
+    h3.style.transition = `all .2s ease-in-out`
+    h3.style.transform = `translateX(0px)`
+    h3.classList.add('fixed', "z-99", "top-16", "bg-gray-400", "dark:bg-gray-800", "w-full", "p-2", "text-center", "text-lg",)
+  } else {
+    h3.classList.remove('fixed', "z-99", "top-16", "bg-gray-400", "dark:bg-gray-800", "w-full", "p-2", "text-center", "text-lg",)
+    h3.style.transform = `translateY(${y * 2}px)`
+  }
 }
