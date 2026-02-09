@@ -4,11 +4,14 @@ import { activateLazyImages, animation, getDietaryStatus, getThemeColors, pageLo
 let serverMsg = `<p class="mt-10 text-center text-2xl font-bold mx-auto ">it seems like Server is not responding & may be server is down or please check your network may be down</p>`
 
 const loader = pageLoader();
+let AllSlides;
+let current = 0;
 
 window.addEventListener("load", () => {
   loader.style.opacity = "0";
 
   setTimeout(() => loader.remove(), 500);
+ 
 });
 
 
@@ -18,6 +21,8 @@ const catsUl = document.getElementById("catsUl")
 const country_ul = document.getElementById("country_ul")
 const country_main = document.getElementById("country_main")
 const browseByName = document.getElementById("browseByName")
+const btnNex = document.getElementById("btnNex")
+const btnPrev = document.getElementById("btnPrev")
 
 
 let foodItems = ['noodles', 'pasta', 'burger', 'pizza', 'Arrabiata', 'dal'];
@@ -25,7 +30,7 @@ let foodItems = ['noodles', 'pasta', 'burger', 'pizza', 'Arrabiata', 'dal'];
 export async function getIngredientData(name) {
   const controller = new AbortController();
   const signal = controller.signal;
-  isLoading = true;
+
   try {
     const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`, { signal });
     const detail = await res.json();
@@ -54,7 +59,7 @@ async function recepieFinder() {
     if (ldata) { console.log("loaded from loalcl"); return ldata; }
     return data;
   } catch (err) { console.log(err); }
-  
+
 }
 
 async function getCategories() {
@@ -128,7 +133,9 @@ async function recipeBook() {
   const allMeals = data?.filter(d => d && d.meals).flatMap(d => d.meals);
   main.innerHTML = "";
 
-  allMeals.forEach(meal => {
+  AllSlides = allMeals.length
+
+  allMeals.forEach((meal, i) => {
     let ingredientsList = "";
     for (let i = 1; i <= 20; i++) {
       const ing = meal[`strIngredient${i}`];
@@ -144,7 +151,9 @@ async function recipeBook() {
     }
 
     const mealContainer = document.createElement("div");
-    mealContainer.className = "flex-none w-full min-h-screen flex flex-wrap lg:flex-nowrap gap-6 p-6 md:p-10 items-center justify-center snap-start";
+    mealContainer.className = "slide flex-none w-full min-h-screen flex flex-wrap lg:flex-nowrap gap-6 p-6 md:p-10 items-center justify-center snap-start transition-transform duration-500";
+
+    mealContainer.dataset.id = i
     main.style.background = "var(--slide-bg)";
     mealContainer.style.color = "var(--slide-font)";
     mealContainer.innerHTML = `
@@ -174,6 +183,8 @@ async function recipeBook() {
 
     main.appendChild(mealContainer);
   });
+
+  moveSlides()
 }
 // Global function to handle ingredient clicks
 window.alertIngredient = async (name) => {
@@ -338,3 +349,26 @@ if (browseByName) {
     }
   })
 }
+
+function moveSlides() {
+  const slides = main.querySelectorAll(".slide");
+
+  slides.forEach(slide => {
+    slide.style.transform = `translateX(${-100 * current}%)`;
+  });
+
+  btnPrev.disabled = current === 0;
+  btnNex.disabled = current === AllSlides - 1;
+}
+
+btnNex?.addEventListener("click", () => {
+  if (current >= AllSlides - 1) return;
+  current++;
+  moveSlides();
+});
+
+btnPrev?.addEventListener("click", () => {
+  if (current <= 0) return;
+  current--;
+  moveSlides();
+});

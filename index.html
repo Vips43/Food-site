@@ -71,15 +71,22 @@
   </main>
 
   <!-- main menu  -->
-  <main id="main"
-    class="min-h-screen w-full text-white flex items-center  overflow-x-scroll snap-x snap-mandatory scrollbar-hide overflow-y-visible">
+  <main class="relative">
+    <div id="main"
+    class="min-h-screen w-full text-white flex items-center  overflow-x-scroll snap-x snap-mandatory scrollbar-hide overflow-y-visible"``>
 
+    </div>
+    <button id="btnPrev" class="absolute top-1/2 left-3 text-white -translate-y-1/2 text-2xl p-px rounded-full bg-amber-800">
+      <i class="fa-solid fa-angle-left"></i>
+    </button>
+    <button id="btnNex" class="absolute top-1/2 right-3 text-white -translate-y-1/2 text-2xl p-px rounded-full bg-amber-800">
+      <i class="fa-solid fa-angle-right"></i>
+    </button>
   </main>
 
 
   <script type="module" src="scripts/misc.js"></script>
   <script type="module" src="scripts/script.js"></script>
-  <script src="js.js"></script>
 </body>
 
 </html>

@@ -330,7 +330,7 @@ export function pageLoader() {
   div.innerHTML = `
     <div class="flex flex-col items-center gap-4">
       <div class="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-      <p class="text-lg font-semibold">Cooking meals…</p>
+      <p class="text-lg font-semibold">Loading meals…</p>
     </div>
   `;
 
