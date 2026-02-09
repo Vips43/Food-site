@@ -1,5 +1,4 @@
-
-import { animate, scroll } from "https://cdn.jsdelivr.net/npm/@motionone/dom/+esm";
+import { getByCats } from "./category.js";
 import { activateLazyImages, animation, getDietaryStatus, getThemeColors, showSkeleton } from "./misc.js";
 
 let serverMsg = `<p class="mt-10 text-center text-2xl font-bold mx-auto ">it seems like Server is not responding & may be server is down or please check your network may be down</p>`
@@ -8,12 +7,15 @@ let main = document.getElementById('main');
 const catsUl = document.getElementById("catsUl")
 const country_ul = document.getElementById("country_ul")
 const country_main = document.getElementById("country_main")
+const browseByName = document.getElementById("browseByName")
 
 let foodItems = ['noodles', 'pasta', 'burger', 'pizza', 'Arrabiata', 'dal'];
 
 export async function getIngredientData(name) {
+  const controller = new AbortController();
+  const signal = controller.signal;
   try {
-    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`);
+    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`,{signal});
     const detail = await res.json();
     console.log(detail)
     const img = `https://www.themealdb.com/images/ingredients/${name}.png`
@@ -23,9 +25,11 @@ export async function getIngredientData(name) {
 }
 
 async function recepieFinder() {
+  const controller = new AbortController();
+  const signal = controller.signal;
   try {
     const requests = foodItems.map(foo =>
-      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foo}`)
+      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${foo}`,{signal})
         .then(r => r.json())
         .catch(() => null)
     );
@@ -77,14 +81,12 @@ function renderCats() {
       `;
 
 
-      li.addEventListener("click", () => {
+      li.addEventListener("click", async () => {
         window.location.href = `./pages/category.html?category=${encodeURIComponent(cat.strCategory)}`;
       });
-      ;
 
       fragment.append(li);
 
-      // stagger reveal
       setTimeout(() => {
         li.classList.remove("opacity-0", "translate-y-4");
       }, index * 80);
@@ -103,7 +105,6 @@ async function recipeBook() {
   const data = await recepieFinder();
   const theme = getThemeColors();
 
-  console.log(data)
   if (!data) {
     main.innerHTML = "<p class='text-center text-red-600'>Failed to load recipes</p>";
     return;
@@ -200,38 +201,55 @@ async function getCountry_Name() {
 
   country_ul.innerHTML = ``
   country_ul.classList.add("p-5")
+
   const fragment = document.createDocumentFragment()
-  countryNames.meals.forEach((name) => {
+
+  countryNames.meals.forEach((name, i) => {
     const li = document.createElement("li");
-    li.classList.add(`bg-gray-500`, `py-2`, `rounded-lg`, `text-white`, `cursor-pointer`, `hover:underline`);
+    li.className = `
+      bg-gray-500 py-2 rounded-lg text-white cursor-pointer hover:underline
+      transition-all duration-300 opacity-0 scale-0
+    `;
     li.innerText = name?.strArea
     fragment.append(li)
 
     li.addEventListener("click", (e) => {
-      country_ul.querySelectorAll("li").forEach(l => { l.classList.replace("text-selected", "text-white"); })
+      country_ul.querySelectorAll("li").forEach(l => {
+        l.classList.replace("text-selected", "text-white");
+      })
 
       e.target.classList.replace("text-white", "text-selected");
+      window.location.href = `./pages/category.html?country=${encodeURIComponent(li.innerText)}`;
     })
+    setTimeout(() => {
+      li.classList.remove("opacity-0", "scale-0")
+    }, 50 * i);
   })
   country_ul.append(fragment)
 }
 
-let isTrue = true;
-country_main.querySelector("h3").addEventListener("click", async () => {
-  if (isTrue) {
-    country_main.querySelector("h3 i").classList.add("transition-all", "rotate-90")
-    loading(country_ul)
-    await getCountry_Name()
-    isTrue = false;
-  } else {
-    country_main.querySelector("h3 i").classList.remove("rotate-90")
+let isTrue = false;
 
-    country_ul.classList.remove("p-5")
-    country_ul.innerHTML = ``
-    isTrue = true
-  }
+if (country_main && country_ul) {
+  country_main.querySelector("h3").addEventListener("click", async () => {
+    const icon = country_main.querySelector("h3 i");
 
-})
+    if (!isTrue) {
+      icon.classList.add("transition-all", "rotate-90");
+
+      country_ul.classList.add("p-5");
+      loading(country_ul);
+      await getCountry_Name();
+      isTrue = true;
+    } else {
+      icon.classList.remove("rotate-90")
+      country_ul.classList.remove("p-5")
+      country_ul.innerHTML = ``
+
+      isTrue = false
+    }
+  })
+}
 
 function loading(dummy) {
   country_ul.innerHTML = ``
@@ -243,4 +261,54 @@ function loading(dummy) {
     frag.append(subDiv)
   }
   dummy.append(frag)
+}
+
+function renderBrowseByName() {
+  const array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+  ]
+
+  const alphas = array.toString().split(",")
+
+  const frag = document.createDocumentFragment();
+  browseByName.innerHTML = ``
+  alphas.forEach((alpha, i) => {
+    const span = document.createElement("span");
+    span.className = `hover:font-semibold flex hover:text-amber-600 w-7 h-10 cursor-pointer text-center transition-all duration-700 opacity-0 scale-0`
+    span.innerText = `${alpha}/`
+
+    setTimeout(() => {
+      span.classList.remove("opacity-0", "scale-0")
+    }, 30 * i);
+
+    span.addEventListener("click", (e) => {
+      e.preventDefault();
+      browseByName.querySelectorAll("span").forEach(s => s.classList.remove("text-amber-600"));
+      span.classList.add("text-amber-600", "font-semibold");
+
+      window.location.href = `pages/category.html?letter=${alpha.toLowerCase()}`
+    })
+    frag.append(span)
+  })
+  browseByName.append(frag)
+}
+
+if (browseByName) {
+  const browseByName_h3 = document.querySelector("#browseByNameMain h3");
+  const browseByName_Main = document.getElementById("browseByNameMain");
+
+  let isTrue = true;
+
+  browseByName_h3.addEventListener("click", () => {
+    const icon = browseByName_h3.querySelector("i");
+    if (isTrue) {
+      renderBrowseByName()
+      icon.classList.add("rotate-90")
+      isTrue = false;
+    } else {
+      browseByName_Main.querySelector("#browseByName").innerHTML = ``
+      icon.classList.remove("rotate-90")
+      isTrue = true;
+
+    }
+  })
 }

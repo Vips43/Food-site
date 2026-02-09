@@ -1,6 +1,12 @@
 import { getDietaryStatus, select } from "./misc.js";
 import { getIngredientData } from "./script.js";
 
+function setFavIcon(){
+  const favIcon = document.getElementById("favicon")
+  favIcon.href = ``
+}
+
+
 const fullMealDetails = document.getElementById("fullMealDetails")
 
 const params = new URLSearchParams(window.location.search);
@@ -24,7 +30,7 @@ async function renderFullmeal(id) {
   const meal = data.meals[0]
 
   const formatted = meal.strInstructions
-  .split(/\r\n\r\n/)
+  .split(/\r\n/)
   .map(step => `<span class="mb-2 block list-decimal">${step}</span>`)
   .join("");
 
@@ -54,17 +60,18 @@ async function renderFullmeal(id) {
   mealContainer.innerHTML = `
   <!-- Instructions -->
   
-  <h2 class="text-3xl hidden lg:block col-span-3 md:text-4xl font-black uppercase tracking-tight text-yellow-400 text-center mx-auto lg:text-left">
+  <p class="text-3xl hidden lg:block col-span-3 md:text-4xl font-black uppercase tracking-tight text-yellow-400 text-center mx-auto lg:text-left text-shadow-2xs">
     <span id="title"> ${meal.strMeal}</span>
     ${getDietaryStatus(meal.strCategory)}
-  </h2>
+    <span class="block text-base text-white text-center font-semibold underline">${meal.strArea} Dish</span>
+  </p>
   
-  <section class="instruction flex flex-col justify-center space-y-4 order-2 lg:order-1">
+  <section class="instruction flex flex-col justify-center space-y-4 order-2 lg:order-3">
     <h2 class="text-3xl lg:hidden md:text-4xl font-black uppercase tracking-tight text-yellow-400 text-center lg:text-left">
       <span id="title"> ${meal.strMeal}</span>
       ${getDietaryStatus(meal.strCategory)}
     </h2>
-    <p class="text-center font-semibold underline">${meal.strArea} Dish</p>
+    <p class="lg:hidden text-center font-semibold underline">${meal.strArea} Dish</p>
 
     <h3 class="font-bold text-xl text-center lg:text-left flex justify-center items-center gap-4">
       Instructions  ${youtube}
@@ -77,15 +84,15 @@ async function renderFullmeal(id) {
   </section>
 
   <!-- Image -->
-  <section class="flex justify-center items-center order-1 lg:order-2">
+  <section class="flex justify-center items-center order-1">
     <div class="w-72 md:w-96 aspect-square rounded-full overflow-hidden shadow-2xl border-8 border-gray-700">
       <img src="${meal.strMealThumb}"
-           class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+           class="w-full h-full object-cover transition-transform duration-500">
     </div>
   </section>
 
   <!-- Ingredients -->
-  <section class="ingredient flex flex-col items-center space-y-4 order-3">
+  <section class="ingredient flex flex-col items-center space-y-4 order-3 lg:order-2">
     <h3 class="font-bold text-xl">Ingredients</h3>
 
     <ul class="grid grid-cols-2 gap-2 text-sm w-full">

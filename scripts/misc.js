@@ -310,4 +310,3 @@ export function animation() {
 
   slides.forEach((slide) => observer.observe(slide));
 }
-
